@@ -161,13 +161,45 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         const logoOrHomeLink = e.target.closest('.logo a, .footer-col .logo a, .navbar .logo a, a.logo, a[href="index.html"], a[href="./index.html"]');
         if (logoOrHomeLink) {
-            e.preventDefault();
+            const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+            const isHomePage = currentPage === 'index.html' || currentPage === '' || currentPage === 'index';
+
             sessionStorage.removeItem('404_return_scroll_y');
             sessionStorage.removeItem('404_return_section');
             sessionStorage.removeItem('404_is_returning');
 
-            // Cleanly reload and redirect directly to index.html
-            window.location.href = 'index.html';
+            if (isHomePage) {
+                // If already on Home page, smoothly scroll to top without reloading
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                // Navigate cleanly to index.html
+                e.preventDefault();
+                window.location.href = 'index.html';
+            }
+        }
+    });
+
+    // Same-Page Link Handler: smoothly scroll to top instead of reloading when clicking the current page's nav link
+    document.addEventListener('click', (e) => {
+        const pageLink = e.target.closest('a[href$=".html"]');
+        if (pageLink && !pageLink.closest('.logo') && !pageLink.classList.contains('logo')) {
+            const targetHref = pageLink.getAttribute('href');
+            if (targetHref && !targetHref.includes('404.html') && !targetHref.includes('#')) {
+                const targetPage = targetHref.split('/').pop().split('?')[0].toLowerCase();
+                const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+
+                if (targetPage === currentPage) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
         }
     });
 
@@ -445,24 +477,26 @@ document.addEventListener('DOMContentLoaded', () => {
         projectsSlider.resetAutoplay();
     };
 
-    // Testimonials Swiper
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
+    // Testimonials Swiper (if present on the page)
+    if (typeof Swiper !== 'undefined' && document.querySelector('.mySwiper')) {
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
             },
-        },
-    });
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+            },
+        });
+    }
 
 });

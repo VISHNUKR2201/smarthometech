@@ -620,7 +620,41 @@ body.contact-page,
     width: 100%;
     height: 100%;
     border: 0;
-    filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%);
+    display: block;
+}
+
+.map-direct-overlay-btn {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    color: #1A73E8 !important;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.map-direct-overlay-btn:hover,
+.map-direct-overlay-btn:active {
+    background: #F1F3F4;
+    color: #174EA6 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.map-direct-overlay-btn i {
+    font-size: 0.8rem;
 }
 
 /* ==============================================
@@ -972,6 +1006,13 @@ body.contact-page,
 
     .map-embed-wrapper {
         height: 300px;
+    }
+
+    .map-direct-overlay-btn {
+        top: 10px;
+        left: 10px;
+        padding: 7px 12px;
+        font-size: 0.82rem;
     }
 
     .contact-faq-section {

@@ -1,0 +1,2965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Smart Home Resident Hub & Control Portal</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/logo.webp" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #D4E668;
+            --primary-glow: rgba(212, 230, 104, 0.2);
+            --primary-hover: #e0f278;
+            --bg-main: #0E1317;
+            --bg-card: #161D22;
+            --bg-card-hover: #1C252B;
+            --bg-sidebar: #12181C;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(212, 230, 104, 0.4);
+            --text-main: #FFFFFF;
+            --text-muted: #CCD6DC;
+            --text-dim: #8A99A4;
+            --accent-gold: #E3B645;
+            --accent-cyan: #38BDF8;
+            --accent-purple: #A855F7;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --sidebar-width: 280px;
+            --header-height: 75px;
+            --transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Layout Container */
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .sidebar-badge {
+            background: rgba(212, 230, 104, 0.15);
+            border: 1px solid rgba(212, 230, 104, 0.3);
+            color: var(--primary);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-close-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 18px 12px;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-category-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-dim);
+            padding: 12px 14px 4px;
+        }
+
+        .sidebar-menu-item {
+            width: 100%;
+        }
+
+        .sidebar-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .sidebar-menu-link i {
+            font-size: 1.05rem;
+            width: 22px;
+            text-align: center;
+            color: var(--text-dim);
+            transition: var(--transition);
+        }
+
+        .sidebar-menu-link:hover {
+            color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .sidebar-menu-link:hover i {
+            color: var(--primary);
+        }
+
+        .sidebar-menu-link.active {
+            color: #12181C;
+            background: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-menu-link.active i {
+            color: #12181C;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            padding: 2px 7px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sidebar-menu-link.active .menu-badge {
+            background: rgba(0, 0, 0, 0.2);
+            color: #12181C;
+        }
+
+        .sidebar-footer {
+            padding: 18px 20px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .user-profile-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        /* Main Panel */
+        .main-panel {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-main);
+        }
+
+        /* Top Sticky Header */
+        .top-header {
+            height: var(--header-height);
+            background-color: rgba(18, 24, 28, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .header-title-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            font-family: 'Jost', sans-serif;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .header-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .header-btn:hover {
+            color: var(--primary);
+            border-color: var(--border-highlight);
+            background-color: rgba(212, 230, 104, 0.05);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--accent-red);
+        }
+
+        /* Content Body & Tab Switching */
+        .content-body {
+            padding: 28px 32px;
+            flex: 1;
+        }
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active-section {
+            display: block;
+            animation: fadeInSection 0.35s ease-out;
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Banner */
+        .section-header-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: linear-gradient(135deg, rgba(22, 29, 34, 0.7) 0%, rgba(18, 24, 28, 0.9) 100%);
+            border: 1px solid var(--border-color);
+            padding: 20px 24px;
+            border-radius: var(--radius-lg);
+        }
+
+        .section-title-desc h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Jost', sans-serif;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title-desc p {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+        }
+
+        .btn-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-lime {
+            background: var(--primary);
+            color: #12181C;
+            border: 1px solid var(--primary);
+            font-weight: 700;
+            font-size: 0.84rem;
+            padding: 9px 18px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: var(--transition);
+        }
+
+        .btn-lime:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 0.84rem;
+            padding: 9px 16px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+        }
+
+        /* Quick Scenes Pill Bar */
+        .scene-pills-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .scene-pill-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 30px;
+            color: var(--text-main);
+            font-size: 0.84rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .scene-pill-btn i {
+            color: var(--primary);
+        }
+
+        .scene-pill-btn:hover, .scene-pill-btn.active {
+            background: rgba(212, 230, 104, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+        }
+
+        .metric-value {
+            font-size: 1.65rem;
+            font-weight: 700;
+            font-family: 'Jost', sans-serif;
+            color: var(--text-main);
+            margin: 2px 0;
+        }
+
+        .metric-trend {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: var(--accent-green);
+        }
+
+        .trend-gold {
+            color: var(--accent-gold);
+        }
+
+        .trend-cyan {
+            color: var(--accent-cyan);
+        }
+
+        .metric-icon-wrap {
+            width: 46px;
+            height: 46px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .icon-lime {
+            background: rgba(212, 230, 104, 0.12);
+            color: var(--primary);
+        }
+
+        .icon-cyan {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--accent-cyan);
+        }
+
+        .icon-purple {
+            background: rgba(168, 85, 247, 0.12);
+            color: var(--accent-purple);
+        }
+
+        .icon-green {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-green);
+        }
+
+        .icon-gold {
+            background: rgba(227, 182, 69, 0.12);
+            color: var(--accent-gold);
+        }
+
+        /* Showcase Photography Cards */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .showcase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .showcase-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .showcase-img-wrap {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .showcase-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .showcase-card:hover .showcase-img {
+            transform: scale(1.05);
+        }
+
+        .showcase-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(14, 19, 23, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .showcase-status {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(16, 185, 129, 0.9);
+            color: #FFFFFF;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 12px;
+        }
+
+        .showcase-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .showcase-body h3 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .showcase-body p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .showcase-specs-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .spec-label {
+            font-size: 0.66rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .spec-val {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .showcase-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .showcase-action-link {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .showcase-action-link:hover {
+            color: var(--primary-hover);
+            transform: translateX(3px);
+        }
+
+        /* Charts Panels */
+        .panel-grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .panel-grid-equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .panel-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .dash-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            font-family: 'Jost', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+        }
+
+        .chart-box {
+            position: relative;
+            height: 270px;
+            width: 100%;
+        }
+
+        /* Interactive Room Controls Grid */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .ctrl-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition);
+        }
+
+        .ctrl-card:hover {
+            border-color: rgba(212, 230, 104, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .ctrl-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ctrl-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ctrl-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(212, 230, 104, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .ctrl-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .ctrl-sub {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        /* Toggle switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #273138;
+            transition: .3s;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #FFFFFF;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+            background-color: #12181C;
+        }
+
+        /* Range Slider */
+        .range-slider-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .range-slider {
+            flex: 1;
+            height: 6px;
+            background: #273138;
+            outline: none;
+            border-radius: 3px;
+            -webkit-appearance: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .range-val {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 42px;
+            text-align: right;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.84rem;
+        }
+
+        .admin-table th {
+            padding: 12px 16px;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+        }
+
+        .admin-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tbl-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .tbl-btn:hover {
+            background: var(--primary);
+            color: #12181C;
+            border-color: var(--primary);
+        }
+
+        /* Badges */
+        .badge-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-warning {
+            background: rgba(227, 182, 69, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(227, 182, 69, 0.3);
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-cyan {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Concierge Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+
+        .form-select option {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        /* Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 95;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Mobile Access Events Feed */
+        .access-events-mobile-feed {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .mobile-access-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .mobile-access-card:hover {
+            border-color: rgba(212, 230, 104, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-access-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .mobile-access-point {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .mobile-access-point i {
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .mobile-access-time {
+            font-size: 0.74rem;
+            color: var(--text-dim);
+            font-family: 'Poppins', monospace;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mobile-access-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mobile-access-user {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        .mobile-access-user i {
+            color: var(--accent-cyan);
+            font-size: 0.95rem;
+        }
+
+        .mobile-user-name {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .mobile-access-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 4px;
+        }
+
+        .tbl-btn-mobile {
+            background: rgba(212, 230, 104, 0.12);
+            border: 1px solid rgba(212, 230, 104, 0.3);
+            color: var(--primary);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .tbl-btn-mobile:hover, .tbl-btn-mobile:active {
+            background: var(--primary);
+            color: #12181C;
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1280px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .showcase-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .panel-grid-2,
+            .panel-grid-equal {
+                grid-template-columns: 1fr;
+            }
+            .panel-grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.mobile-active {
+                transform: translateX(0);
+            }
+            .sidebar-close-btn {
+                display: block;
+            }
+            .main-panel {
+                margin-left: 0;
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            .top-header {
+                padding: 0 18px;
+            }
+            .content-body {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-access-table {
+                display: none !important;
+            }
+            .access-events-mobile-feed {
+                display: flex !important;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+            .panel-grid-2,
+            .panel-grid-equal,
+            .panel-grid-3 {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+            .dash-card {
+                padding: 16px 14px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+            .card-header-row {
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                margin-bottom: 12px !important;
+                padding-bottom: 10px !important;
+            }
+            .card-title {
+                font-size: 0.95rem !important;
+                line-height: 1.35 !important;
+            }
+            .chart-box {
+                height: 230px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+            }
+            .header-title {
+                font-size: 1.15rem;
+            }
+            .section-title-desc h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-body {
+                padding: 12px 10px !important;
+            }
+            .dash-card {
+                padding: 14px 12px !important;
+                border-radius: 12px !important;
+            }
+            .card-title {
+                font-size: 0.88rem !important;
+            }
+            .chart-box {
+                height: 210px !important;
+            }
+            .badge-active, .badge-warning, .badge-cyan {
+                font-size: 0.68rem !important;
+                padding: 2px 7px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="dashboard-wrapper">
+        <!-- ==============================================
+             SIDEBAR NAVIGATION
+             ============================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="userdashboard.html" class="logo-wrapper" id="user-logo-btn" title="Reload Resident Dashboard">
+                    <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                    <span class="sidebar-badge">Resident</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="menu-category-label">Home Control</li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link active" data-section="overview-section">
+                        <i class="fas fa-home"></i>
+                        <span>My Smart Home</span>
+                        <span class="menu-badge">Live</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="zones-section">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Living Zones & Climate</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="lighting-section">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Circadian Lighting</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="security-section">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security & Cameras</span>
+                        <span class="menu-badge" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green);">Armed</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="media-section">
+                        <i class="fas fa-music"></i>
+                        <span>Hi-Fi Audio & Video</span>
+                    </a>
+                </li>
+
+                <li class="menu-category-label">Power & Scenes</li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="energy-section">
+                        <i class="fas fa-solar-panel"></i>
+                        <span>Solar & Battery Power</span>
+                        <span class="menu-badge">94% BESS</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="scenes-section">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Scenes & Automations</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="concierge-section">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>White-Glove Support</span>
+                    </a>
+                </li>
+
+                <li class="menu-category-label">Navigation</li>
+                <li class="sidebar-menu-item">
+                    <a href="index.html" class="sidebar-menu-link">
+                        <i class="fas fa-globe"></i>
+                        <span>Website Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="login.html" class="sidebar-menu-link" style="color: var(--accent-red);">
+                        <i class="fas fa-sign-out-alt" style="color: var(--accent-red);"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-preview">
+                    <img src="images/team-2.webp" alt="Resident User" class="user-avatar" id="sidebar-user-avatar">
+                    <div class="user-info">
+                        <div class="user-name" id="sidebar-user-name">Resident User</div>
+                        <div class="user-role" id="sidebar-user-role">user@stacklysmart.com</div>
+                    </div>
+                    <a href="404.html?from=userdashboard.html&section=user-btn-sidebar-settings" id="user-btn-sidebar-settings" style="color: var(--text-dim); text-decoration: none;" title="Account Settings">
+                        <i class="fas fa-user-cog"></i>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ==============================================
+             MAIN PANEL
+             ============================================== -->
+        <main class="main-panel">
+            <!-- Top Sticky Header -->
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <button class="mobile-nav-toggle" id="mobile-toggle-btn" aria-label="Toggle Navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="header-title-section">
+                        <h1 class="header-title" id="page-nav-title">My Smart Home</h1>
+                        <span class="header-subtitle">Stackly Autonomous Resident Living Portal</span>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <a href="404.html?from=userdashboard.html&section=user-btn-header-bell" id="user-btn-header-bell" class="header-btn" title="Smart Home Notifications">
+                        <i class="far fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- ==============================================
+                 CONTENT BODY (8 SMART HOME USER TABS)
+                 ============================================== -->
+            <div class="content-body">
+                
+                <!-- TAB 1: OVERVIEW SECTION -->
+                <section id="overview-section" class="dashboard-section active-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2 id="overview-welcome-title">Welcome Home!</h2>
+                            <p id="overview-welcome-sub">Your Smart Home is currently in <strong>Afternoon Comfort Mode</strong>. All 48 IoT nodes online and energy self-sufficient.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-party-atmosphere" id="user-btn-party-atmosphere" class="btn-lime">
+                                <i class="fas fa-cocktail"></i> Party Atmosphere
+                            </a>
+                            <a href="404.html?from=userdashboard.html&section=user-btn-goodnight-mode" id="user-btn-goodnight-mode" class="btn-outline">
+                                <i class="fas fa-moon"></i> Good Night Mode
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Scene Pills -->
+                    <div class="scene-pills-bar">
+                        <a href="404.html?from=userdashboard.html&section=user-btn-scene-morning" id="user-btn-scene-morning" class="scene-pill-btn">
+                            <i class="fas fa-sun"></i> Morning Awakening
+                        </a>
+                        <a href="404.html?from=userdashboard.html&section=user-btn-scene-cinema" id="user-btn-scene-cinema" class="scene-pill-btn">
+                            <i class="fas fa-film"></i> Cinema Mode
+                        </a>
+                        <a href="404.html?from=userdashboard.html&section=user-btn-scene-dinner" id="user-btn-scene-dinner" class="scene-pill-btn">
+                            <i class="fas fa-utensils"></i> Dinner Romance
+                        </a>
+                        <a href="404.html?from=userdashboard.html&section=user-btn-scene-away" id="user-btn-scene-away" class="scene-pill-btn">
+                            <i class="fas fa-shield-alt"></i> Away Shield
+                        </a>
+                        <a href="404.html?from=userdashboard.html&section=user-btn-scene-alloff" id="user-btn-scene-alloff" class="scene-pill-btn">
+                            <i class="fas fa-power-off"></i> All Lights Off
+                        </a>
+                    </div>
+
+                    <!-- 4 Top Metrics -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Active Smart Nodes</span>
+                                <span class="metric-value">48 / 48</span>
+                                <span class="metric-trend trend-up">
+                                    <i class="fas fa-check-circle"></i> 100% Thread Mesh Health
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-lime">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Indoor Microclimate</span>
+                                <span class="metric-value">71.5°F</span>
+                                <span class="metric-trend trend-cyan">
+                                    <i class="fas fa-tint"></i> 46% Humidity (Optimal)
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-cyan">
+                                <i class="fas fa-temperature-low"></i>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Perimeter Security</span>
+                                <span class="metric-value">Armed</span>
+                                <span class="metric-trend trend-up">
+                                    <i class="fas fa-shield-check"></i> 8 Optical AI tripwires active
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-green">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Solar Self-Sufficiency</span>
+                                <span class="metric-value">94.2%</span>
+                                <span class="metric-trend trend-gold">
+                                    <i class="fas fa-bolt"></i> +6.8 kW Clean Surplus
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-gold">
+                                <i class="fas fa-solar-panel"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Showcase Cards -->
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/project-interior.webp" alt="Great Living Salon" class="showcase-img">
+                                <span class="showcase-tag">Zone 01</span>
+                                <span class="showcase-status"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Active</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Great Living Salon</h3>
+                                <p>Circadian lighting at 4800K, motorized drapery open 85%, background jazz streaming.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Temp</span><span class="spec-val">71.0°F</span></div>
+                                    <div><span class="spec-label">Lights</span><span class="spec-val">65%</span></div>
+                                    <div><span class="spec-label">Audio</span><span class="spec-val">42 dB</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">DALI-2 / KNX</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-adjust-living-room" id="user-btn-adjust-living-room" class="showcase-action-link">Adjust Zone <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/hero-slide-2.webp" alt="Master Suite" class="showcase-img">
+                                <span class="showcase-tag">Zone 02</span>
+                                <span class="showcase-status"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Standby</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Master Bedroom Suite</h3>
+                                <p>Silent radiant cooling active, blackouts programmed for 22:30, air purified at AQI 12.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Temp</span><span class="spec-val">68.5°F</span></div>
+                                    <div><span class="spec-label">Shades</span><span class="spec-val">Closed</span></div>
+                                    <div><span class="spec-label">AQI</span><span class="spec-val">12 (Pure)</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Matter / Thread</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-adjust-master-suite" id="user-btn-adjust-master-suite" class="showcase-action-link">Adjust Zone <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/hero-slide-3.webp" alt="Dolby Atmos Cinema" class="showcase-img">
+                                <span class="showcase-tag">Zone 03</span>
+                                <span class="showcase-status" style="background: rgba(56, 189, 248, 0.9);"><i class="fas fa-film" style="font-size:0.5rem;"></i> Cinema Ready</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Private Atmos Cinema</h3>
+                                <p>140-inch Stewart acoustic screen calibrated, 7.2.4 Triad audio pre-warmed, 68°F climate.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Screen</span><span class="spec-val">Ready</span></div>
+                                    <div><span class="spec-label">AVR</span><span class="spec-val">Standby</span></div>
+                                    <div><span class="spec-label">Mood</span><span class="spec-val">8% Glow</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Kaleidescape 4K</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-launch-cinema" id="user-btn-launch-cinema" class="showcase-action-link">Launch Movie <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Quick Controls -->
+                    <div class="dash-card" style="margin-bottom: 24px;">
+                        <div class="card-header-row">
+                            <div class="card-title">
+                                <i class="fas fa-toggle-on"></i> Instant Ambient Device Controls
+                            </div>
+                            <a href="404.html?from=userdashboard.html&section=user-btn-add-automation" id="user-btn-add-automation" class="tbl-btn">
+                                <i class="fas fa-plus"></i> Add Automation
+                            </a>
+                        </div>
+                        <div class="controls-grid">
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <div class="ctrl-title-wrap">
+                                        <div class="ctrl-icon"><i class="fas fa-lightbulb"></i></div>
+                                        <div>
+                                            <div class="ctrl-name">Living Gallery Downlights</div>
+                                            <div class="ctrl-sub">DALI-2 Loop 01</div>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="75" class="range-slider">
+                                    <span class="range-val">75%</span>
+                                </div>
+                            </div>
+
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <div class="ctrl-title-wrap">
+                                        <div class="ctrl-icon" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan);"><i class="fas fa-snowflake"></i></div>
+                                        <div>
+                                            <div class="ctrl-name">Master Suite Radiant AC</div>
+                                            <div class="ctrl-sub">Daikin VRV IV</div>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="62" max="80" value="69" class="range-slider">
+                                    <span class="range-val">69°F</span>
+                                </div>
+                            </div>
+
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <div class="ctrl-title-wrap">
+                                        <div class="ctrl-icon" style="background: rgba(168, 85, 247, 0.1); color: var(--accent-purple);"><i class="fas fa-blinds"></i></div>
+                                        <div>
+                                            <div class="ctrl-name">Terrace Architectural Shades</div>
+                                            <div class="ctrl-sub">Somfy RTS Quiet Motor</div>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="60" class="range-slider">
+                                    <span class="range-val">60%</span>
+                                </div>
+                            </div>
+
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <div class="ctrl-title-wrap">
+                                        <div class="ctrl-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green);"><i class="fas fa-volume-up"></i></div>
+                                        <div>
+                                            <div class="ctrl-name">Poolside Hi-Fi Acoustic Zone</div>
+                                            <div class="ctrl-sub">Sonance Landscape 70V</div>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="35" class="range-slider">
+                                    <span class="range-val">35%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Charts -->
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-chart-area"></i> Whole-Home Solar Generation vs. Consumption</div>
+                                <span class="badge-active">Net Exporter</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-power-flow"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-chart-pie"></i> Energy Usage by Room</div>
+                                <span class="badge-cyan">Today</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-room-energy"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: LIVING ZONES & CLIMATE -->
+                <section id="zones-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Living Zones & Multi-Zone Climate</h2>
+                            <p>Individualized microclimate setpoints, radiant floor heating, and air purification per zone.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-sync-eco" id="user-btn-sync-eco" class="btn-outline">
+                                <i class="fas fa-leaf"></i> Sync All to Eco 72°F
+                            </a>
+                            <a href="404.html?from=userdashboard.html&section=user-btn-purify-air" id="user-btn-purify-air" class="btn-lime">
+                                <i class="fas fa-wind"></i> Whole-Home Air Purify
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/home-img01.webp" alt="Chef's Kitchen" class="showcase-img">
+                                <span class="showcase-tag">Culinary Suite</span>
+                                <span class="showcase-status">72.0°F</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Chef's Kitchen & Dining</h3>
+                                <p>Active air filtration, target humidity 45%, smart rangehood linked to KNX ventilation.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Set</span><span class="spec-val">72.0°F</span></div>
+                                    <div><span class="spec-label">Fan</span><span class="spec-val">Whisper</span></div>
+                                    <div><span class="spec-label">CO2</span><span class="spec-val">410 ppm</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Purifier Online</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-cfg-kitchen-climate" id="user-btn-cfg-kitchen-climate" class="showcase-action-link">Configure <i class="fas fa-sliders-h"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/home-img02.webp" alt="Executive Study" class="showcase-img">
+                                <span class="showcase-tag">Executive Study</span>
+                                <span class="showcase-status">70.0°F</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Executive Library & Study</h3>
+                                <p>Deep focus thermal setpoint, ultra-low acoustic fan speeds, and optimal oxygenation.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Set</span><span class="spec-val">70.0°F</span></div>
+                                    <div><span class="spec-label">Humid</span><span class="spec-val">48%</span></div>
+                                    <div><span class="spec-label">AQI</span><span class="spec-val">10</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Focus Mode</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-cfg-study-climate" id="user-btn-cfg-study-climate" class="showcase-action-link">Configure <i class="fas fa-sliders-h"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/why-choose-us.webp" alt="Wellness Spa" class="showcase-img">
+                                <span class="showcase-tag">Wellness Spa</span>
+                                <span class="showcase-status">78.0°F</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Wellness Spa & Indoor Pool</h3>
+                                <p>Heated floor slab at 82°F, dehumidification system running at 50% relative humidity.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Pool</span><span class="spec-val">84.0°F</span></div>
+                                    <div><span class="spec-label">Slab</span><span class="spec-val">82.0°F</span></div>
+                                    <div><span class="spec-label">Steam</span><span class="spec-val">Ready</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Hydro HVAC</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-cfg-spa-climate" id="user-btn-cfg-spa-climate" class="showcase-action-link">Configure <i class="fas fa-sliders-h"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-equal">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-thermometer-half"></i> Zone Temperature vs. Humidity</div>
+                                <span class="badge-active">Real-Time</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-zone-temp"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-wind"></i> 24-Hour Indoor Air Quality (AQI)</div>
+                                <span class="badge-cyan">PM2.5 & CO2</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-aqi"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: CIRCADIAN LIGHTING -->
+                <section id="lighting-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Circadian Rhythm & Biodynamic Lighting</h2>
+                            <p>Automated biological Kelvin shifts supporting natural melatonin production and visual clarity.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-circadian-sync-solar" id="user-btn-circadian-sync-solar" class="btn-lime">
+                                <i class="fas fa-sync-alt"></i> Sync with Solar Arc
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-sun"></i> 24-Hour Kelvin Shift vs Natural Daylight</div>
+                                <span class="badge-active">Active Biodynamic Curve</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-circadian-curve"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-palette"></i> Color Temp Presets</div>
+                                <span class="badge-cyan">Quick Apply</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center; height: 100%;">
+                                <div class="ctrl-card" style="border-left: 4px solid #FFA238;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong style="font-size: 0.88rem;">Warm Ember (Sunset)</strong>
+                                            <div style="font-size: 0.72rem; color: var(--text-dim);">2200K - Relaxing Candlelight</div>
+                                        </div>
+                                        <a href="404.html?from=userdashboard.html&section=user-btn-preset-2200k" id="user-btn-preset-2200k" class="tbl-btn">Apply</a>
+                                    </div>
+                                </div>
+                                <div class="ctrl-card" style="border-left: 4px solid #FFE0A3;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong style="font-size: 0.88rem;">Soft White (Evening)</strong>
+                                            <div style="font-size: 0.72rem; color: var(--text-dim);">3000K - Social & Warm Living</div>
+                                        </div>
+                                        <a href="404.html?from=userdashboard.html&section=user-btn-preset-3000k" id="user-btn-preset-3000k" class="tbl-btn">Apply</a>
+                                    </div>
+                                </div>
+                                <div class="ctrl-card" style="border-left: 4px solid #D4E668;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong style="font-size: 0.88rem;">Natural Solar Peak (Noon)</strong>
+                                            <div style="font-size: 0.72rem; color: var(--text-dim);">5600K - High Alertness & Energy</div>
+                                        </div>
+                                        <a href="404.html?from=userdashboard.html&section=user-btn-preset-5600k" id="user-btn-preset-5600k" class="tbl-btn">Apply</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <div class="card-title"><i class="fas fa-sliders-h"></i> Fixture Channel Dimming Matrix</div>
+                            <span class="badge-active">DALI-2 Tunable White</span>
+                        </div>
+                        <div class="controls-grid">
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <span class="ctrl-name">Great Room Chandelier</span>
+                                    <span class="badge-active">4500K</span>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="80" class="range-slider">
+                                    <span class="range-val">80%</span>
+                                </div>
+                            </div>
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <span class="ctrl-name">Dining Cove LED Indirect</span>
+                                    <span class="badge-active">3200K</span>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="50" class="range-slider">
+                                    <span class="range-val">50%</span>
+                                </div>
+                            </div>
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <span class="ctrl-name">Master Suite Perimeter Downlights</span>
+                                    <span class="badge-active">2700K</span>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="30" class="range-slider">
+                                    <span class="range-val">30%</span>
+                                </div>
+                            </div>
+                            <div class="ctrl-card">
+                                <div class="ctrl-header">
+                                    <span class="ctrl-name">Garden Landscape Uplights</span>
+                                    <span class="badge-active">2400K</span>
+                                </div>
+                                <div class="range-slider-wrap">
+                                    <input type="range" min="0" max="100" value="100" class="range-slider">
+                                    <span class="range-val">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: HOME SECURITY & ACCESS -->
+                <section id="security-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Estate Security & Smart Access</h2>
+                            <p>Military-grade encrypted biometric access, optical AI perimeter tripwires, and live camera monitoring.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-create-guest-pin" id="user-btn-create-guest-pin" class="btn-lime">
+                                <i class="fas fa-key"></i> Create Guest PIN
+                            </a>
+                            <a href="404.html?from=userdashboard.html&section=user-btn-disarm-security" id="user-btn-disarm-security" class="btn-outline" style="color: var(--accent-red); border-color: rgba(239, 68, 68, 0.4);">
+                                <i class="fas fa-shield-alt"></i> Armed (Disarm)
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Security Camera Feeds -->
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/about-villa.webp" alt="Front Gate Camera" class="showcase-img">
+                                <span class="showcase-tag">Cam 01 • Main Gate</span>
+                                <span class="showcase-status"><i class="fas fa-video"></i> 4K Live</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Main Entrance & Driveway</h3>
+                                <p>License Plate Recognition Active. Authorized vehicles allow automatic gate swing.</p>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Optical AI Tripwire</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-cam-01-stream" id="user-btn-cam-01-stream" class="showcase-action-link">Live Stream <i class="fas fa-external-link-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/prop-alpina.webp" alt="Pool Terrace Camera" class="showcase-img">
+                                <span class="showcase-tag">Cam 02 • Pool Terrace</span>
+                                <span class="showcase-status"><i class="fas fa-video"></i> 4K Live</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Backyard Pavilion & Pool</h3>
+                                <p>Smart Water Safety boundary armed. No unauthorized movement detected.</p>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Infrared Night Vision</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-cam-02-stream" id="user-btn-cam-02-stream" class="showcase-action-link">Live Stream <i class="fas fa-external-link-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/prop-toronto.webp" alt="Foyer Biometrics" class="showcase-img">
+                                <span class="showcase-tag">Cam 03 • Grand Foyer</span>
+                                <span class="showcase-status"><i class="fas fa-video"></i> 4K Live</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Grand Foyer Biometric Door</h3>
+                                <p>Face ID Lock armed with tamper protection and sub-200ms UWB unlock.</p>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">AES-256 Vault</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-cam-03-stream" id="user-btn-cam-03-stream" class="showcase-action-link">Live Stream <i class="fas fa-external-link-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Access Log & Activity Chart -->
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-history"></i> Recent Access Events & Entries</div>
+                                <span class="badge-active">Logged Locally</span>
+                            </div>
+                            <div class="table-responsive desktop-access-table">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>Portal Point</th>
+                                            <th>User / Guest</th>
+                                            <th>Credential</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>14:28:10</td>
+                                            <td>Grand Foyer Door</td>
+                                            <td>Elena Vance</td>
+                                            <td><span class="badge-active">Biometric 3D Face</span></td>
+                                            <td><a href="404.html?from=userdashboard.html&section=user-btn-clip-log-1" id="user-btn-clip-log-1" class="tbl-btn">View Clip</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>12:15:44</td>
+                                            <td>Driveway Gate</td>
+                                            <td>Alex Vance</td>
+                                            <td><span class="badge-cyan">UWB Smart Key</span></td>
+                                            <td><a href="404.html?from=userdashboard.html&section=user-btn-clip-log-2" id="user-btn-clip-log-2" class="tbl-btn">View Clip</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10:02:18</td>
+                                            <td>Service Courtyard</td>
+                                            <td>Courier (FedEx)</td>
+                                            <td><span class="badge-warning">One-Time PIN</span></td>
+                                            <td><a href="404.html?from=userdashboard.html&section=user-btn-clip-log-3" id="user-btn-clip-log-3" class="tbl-btn">View Clip</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Mobile Access Events Card Feed -->
+                            <div class="access-events-mobile-feed">
+                                <div class="mobile-access-card">
+                                    <div class="mobile-access-header">
+                                        <div class="mobile-access-point">
+                                            <i class="fas fa-door-open"></i>
+                                            <span>Grand Foyer Door</span>
+                                        </div>
+                                        <span class="mobile-access-time"><i class="far fa-clock"></i> 14:28:10</span>
+                                    </div>
+                                    <div class="mobile-access-body">
+                                        <div class="mobile-access-user">
+                                            <i class="fas fa-user-circle"></i>
+                                            <span class="mobile-user-name">Elena Vance</span>
+                                        </div>
+                                        <span class="badge-active"><i class="fas fa-fingerprint"></i> Biometric 3D Face</span>
+                                    </div>
+                                    <div class="mobile-access-footer">
+                                        <a href="404.html?from=userdashboard.html&section=user-btn-clip-log-1" id="user-btn-clip-log-1-m" class="tbl-btn-mobile">
+                                            <i class="fas fa-play"></i> View Clip
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="mobile-access-card">
+                                    <div class="mobile-access-header">
+                                        <div class="mobile-access-point">
+                                            <i class="fas fa-torii-gate"></i>
+                                            <span>Driveway Gate</span>
+                                        </div>
+                                        <span class="mobile-access-time"><i class="far fa-clock"></i> 12:15:44</span>
+                                    </div>
+                                    <div class="mobile-access-body">
+                                        <div class="mobile-access-user">
+                                            <i class="fas fa-user-circle"></i>
+                                            <span class="mobile-user-name">Alex Vance</span>
+                                        </div>
+                                        <span class="badge-cyan"><i class="fas fa-key"></i> UWB Smart Key</span>
+                                    </div>
+                                    <div class="mobile-access-footer">
+                                        <a href="404.html?from=userdashboard.html&section=user-btn-clip-log-2" id="user-btn-clip-log-2-m" class="tbl-btn-mobile">
+                                            <i class="fas fa-play"></i> View Clip
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="mobile-access-card">
+                                    <div class="mobile-access-header">
+                                        <div class="mobile-access-point">
+                                            <i class="fas fa-truck-loading"></i>
+                                            <span>Service Courtyard</span>
+                                        </div>
+                                        <span class="mobile-access-time"><i class="far fa-clock"></i> 10:02:18</span>
+                                    </div>
+                                    <div class="mobile-access-body">
+                                        <div class="mobile-access-user">
+                                            <i class="fas fa-shipping-fast"></i>
+                                            <span class="mobile-user-name">Courier (FedEx)</span>
+                                        </div>
+                                        <span class="badge-warning"><i class="fas fa-hashtag"></i> One-Time PIN</span>
+                                    </div>
+                                    <div class="mobile-access-footer">
+                                        <a href="404.html?from=userdashboard.html&section=user-btn-clip-log-3" id="user-btn-clip-log-3-m" class="tbl-btn-mobile">
+                                            <i class="fas fa-play"></i> View Clip
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-chart-bar"></i> Weekly Motion & Entry Patterns</div>
+                                <span class="badge-cyan">This Week</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-security-activity"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 5: AUDIO, VIDEO & CINEMA -->
+                <section id="media-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Multi-Room Hi-Fi Audio & Video Streaming</h2>
+                            <p>Lossless 24-bit/192kHz audio matrix routing, Dolby Atmos calibration, and Roon server synchronization.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-party-sync" id="user-btn-party-sync" class="btn-lime">
+                                <i class="fas fa-broadcast-tower"></i> Whole-Home Party Sync
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-play-circle"></i> Now Playing: Master Living Salon</div>
+                                <span class="badge-active">Lossless 96kHz FLAC</span>
+                            </div>
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+                                <img src="images/spotlight-main.webp" alt="Album Cover" style="width: 90px; height: 90px; border-radius: 12px; object-fit: cover; border: 1px solid var(--border-color);">
+                                <div>
+                                    <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 4px;">Kind of Blue (Master Edition)</h3>
+                                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 8px;">Miles Davis • Tidal HiFi Plus</p>
+                                    <span class="badge-cyan">Bit-Perfect PCM</span>
+                                </div>
+                            </div>
+                            <div class="range-slider-wrap" style="margin-bottom: 16px;">
+                                <input type="range" min="0" max="100" value="65" class="range-slider">
+                                <span class="range-val">65% Vol</span>
+                            </div>
+                            <div style="display: flex; justify-content: center; gap: 16px;">
+                                <a href="404.html?from=userdashboard.html&section=user-btn-audio-prev" id="user-btn-audio-prev" class="btn-outline"><i class="fas fa-backward"></i></a>
+                                <a href="404.html?from=userdashboard.html&section=user-btn-audio-play" id="user-btn-audio-play" class="btn-lime" style="padding: 10px 22px;"><i class="fas fa-pause"></i></a>
+                                <a href="404.html?from=userdashboard.html&section=user-btn-audio-next" id="user-btn-audio-next" class="btn-outline"><i class="fas fa-forward"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-sliders"></i> Active Sound Zones</div>
+                                <span class="badge-cyan">5 Zones</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div class="ctrl-card">
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                        <strong>Great Room</strong>
+                                        <span style="color: var(--primary);">Jazz Acoustics (Playing)</span>
+                                    </div>
+                                </div>
+                                <div class="ctrl-card">
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                        <strong>Master Suite</strong>
+                                        <span style="color: var(--text-dim);">Lo-Fi Chill (Muted)</span>
+                                    </div>
+                                </div>
+                                <div class="ctrl-card">
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                        <strong>Pool Terrace</strong>
+                                        <span style="color: var(--primary);">Sunset Lounge (Playing)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <div class="card-title"><i class="fas fa-chart-line"></i> Audio Latency & Bandwidth Per Zone (ms)</div>
+                            <span class="badge-active">Sub-1ms Sync</span>
+                        </div>
+                        <div class="chart-box">
+                            <canvas id="chart-user-audio-latency"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 6: SOLAR & BATTERY POWER -->
+                <section id="energy-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Solar Microgrid & Tesla Powerwall BESS</h2>
+                            <p>Rooftop solar generation, whole-home battery backup, Level 2 EV charging, and grid export revenue.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-enable-storm-guard" id="user-btn-enable-storm-guard" class="btn-lime">
+                                <i class="fas fa-shield-virus"></i> Enable Storm Guard
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Solar Array Yield</span>
+                                <span class="metric-value">8.4 kW</span>
+                                <span class="metric-trend trend-up"><i class="fas fa-sun"></i> High Irradiance</span>
+                            </div>
+                            <div class="metric-icon-wrap icon-gold"><i class="fas fa-sun"></i></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Powerwall Reserve</span>
+                                <span class="metric-value">94%</span>
+                                <span class="metric-trend trend-up"><i class="fas fa-battery-full"></i> 13.5 kWh Full</span>
+                            </div>
+                            <div class="metric-icon-wrap icon-green"><i class="fas fa-battery-three-quarters"></i></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">EV Fast Charger</span>
+                                <span class="metric-value">7.2 kW</span>
+                                <span class="metric-trend trend-cyan"><i class="fas fa-charging-station"></i> Porsche Taycan 88%</span>
+                            </div>
+                            <div class="metric-icon-wrap icon-cyan"><i class="fas fa-bolt"></i></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Estimated Monthly Credit</span>
+                                <span class="metric-value">+$148.50</span>
+                                <span class="metric-trend trend-up"><i class="fas fa-arrow-down"></i> Zero Grid Cost</span>
+                            </div>
+                            <div class="metric-icon-wrap icon-lime"><i class="fas fa-receipt"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-equal">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-solar-panel"></i> 24-Hour Energy Generation vs. Demand</div>
+                                <span class="badge-active">Solar + Storage</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-energy-curve"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-dollar-sign"></i> Cumulative Financial Savings (YTD)</div>
+                                <span class="badge-gold">$1,840 Saved</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-user-savings"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 7: SCENES & AUTOMATIONS -->
+                <section id="scenes-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Smart Scenes & Automation Engine</h2>
+                            <p>One-touch multi-system scene choreography executing in under 15ms without cloud latency.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-new-automation-rule" id="user-btn-new-automation-rule" class="btn-lime">
+                                <i class="fas fa-plus"></i> New Automation Rule
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/hero-slide-1.webp" alt="Morning Scene" class="showcase-img">
+                                <span class="showcase-tag">06:45 AM Trigger</span>
+                                <span class="showcase-status"><i class="fas fa-check"></i> Enabled</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>🌅 Sunrise Awakening</h3>
+                                <p>Shades lift to 60%, 3000K warm lighting ramps over 15 mins, bathroom radiant floor warms to 74°F.</p>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Exec Time: 12ms</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-test-scene-morning" id="user-btn-test-scene-morning" class="tbl-btn">Test Run</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/project-blueprint.webp" alt="Cinema Scene" class="showcase-img">
+                                <span class="showcase-tag">1-Touch Scene</span>
+                                <span class="showcase-status"><i class="fas fa-check"></i> Ready</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>🎬 Ultra Cinema Night</h3>
+                                <p>Recessed lights fade to 8%, shades close 100%, 140" acoustic screen drops, Apple TV boots.</p>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Exec Time: 14ms</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-test-scene-cinema" id="user-btn-test-scene-cinema" class="tbl-btn">Test Run</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="images/about-geometric.webp" alt="Away Scene" class="showcase-img">
+                                <span class="showcase-tag">Geofence Trigger</span>
+                                <span class="showcase-status"><i class="fas fa-check"></i> Armed</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>🛡️ Vacation Eco-Shield</h3>
+                                <p>Perimeter armed, thermostats to 78°F, water main shutoff active, smart occupancy lighting simulation.</p>
+                                <div class="showcase-footer">
+                                    <span style="font-size:0.75rem; color:var(--text-dim);">Exec Time: 8ms</span>
+                                    <a href="404.html?from=userdashboard.html&section=user-btn-test-scene-away" id="user-btn-test-scene-away" class="tbl-btn">Test Run</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <div class="card-title"><i class="fas fa-tachometer-alt"></i> Daily Automation Triggers & Execution Rate</div>
+                            <span class="badge-active">100% Local Reliability</span>
+                        </div>
+                        <div class="chart-box">
+                            <canvas id="chart-user-automation-freq"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 8: CONCIERGE & SYSTEM HEALTH -->
+                <section id="concierge-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>White-Glove Support Concierge & System Health</h2>
+                            <p>24/7 dedicated engineering support, firmware health status, and hardware diagnostics.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=userdashboard.html&section=user-btn-dispatch-engineer" id="user-btn-dispatch-engineer" class="btn-lime">
+                                <i class="fas fa-tools"></i> Request On-Site Engineer
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-headset"></i> Contact White-Glove Support</div>
+                                <span class="badge-active">Priority VIP Tier</span>
+                            </div>
+                            <form onsubmit="event.preventDefault(); window.location.href='404.html?from=userdashboard.html&section=user-btn-submit-concierge-ticket';">
+                                <div class="form-group">
+                                    <label class="form-label">Service Request Category</label>
+                                    <select class="form-select">
+                                        <option>Circadian Light & Scene Customization</option>
+                                        <option>Hardware Addition / Device Pairing</option>
+                                        <option>HVAC / Radiant Climate Recalibration</option>
+                                        <option>Audio / Cinema Acoustic Tuning</option>
+                                        <option>Annual Preventive System Maintenance</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Message / Details</label>
+                                    <textarea class="form-textarea" rows="4" placeholder="Describe your request or scheduling preferences..."></textarea>
+                                </div>
+                                <button type="submit" id="user-btn-submit-concierge-ticket" class="btn-lime" style="width: 100%; justify-content: center;">
+                                    <i class="fas fa-paper-plane"></i> Submit Concierge Ticket
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <div class="card-title"><i class="fas fa-server"></i> Hardware Health & Edge Hub</div>
+                                <span class="badge-active">All Systems Operational</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="ctrl-card">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <strong>Stackly Local Edge Hub v4.8</strong>
+                                        <span class="badge-active">Online (2ms)</span>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: var(--text-dim);">CPU: 4% • RAM: 18% • Uptime: 142 Days</span>
+                                </div>
+                                <div class="ctrl-card">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <strong>KNX Twisted Pair Main Bus</strong>
+                                        <span class="badge-active">29.8V Normal</span>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: var(--text-dim);">42 Chock Modules Connected</span>
+                                </div>
+                                <div class="ctrl-card">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <strong>Thread Border Router</strong>
+                                        <span class="badge-active">58 Nodes Synced</span>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: var(--text-dim);">Zero packet drop in 30 days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Global Chart instances object
+        const charts = {};
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initUserProfile();
+            initMobileNav();
+            initTabNavigation();
+            initLogoNavigation();
+            initCharts();
+            restoreActiveTab();
+
+            window.addEventListener("resize", function() {
+                for (let key in charts) {
+                    if (charts[key]) charts[key].resize();
+                }
+            });
+        });
+
+        // 0. Dynamic Logged In User Profile Loader
+        function initUserProfile() {
+            try {
+                const stored = localStorage.getItem('currentUser');
+                if (stored) {
+                    const user = JSON.parse(stored);
+                    const email = user.email || 'user@stacklysmart.com';
+                    const name = user.name || (email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1));
+                    
+                    const nameEl = document.getElementById('sidebar-user-name');
+                    const roleEl = document.getElementById('sidebar-user-role');
+                    const welcomeEl = document.getElementById('overview-welcome-title');
+
+                    if (nameEl) nameEl.textContent = name;
+                    if (roleEl) roleEl.textContent = email;
+                    if (welcomeEl) welcomeEl.textContent = `Welcome Home, ${name}!`;
+                }
+            } catch (e) {
+                console.warn('Profile initialization error:', e);
+            }
+        }
+
+        // 1. Mobile Sidebar Navigation Drawer
+        function initMobileNav() {
+            const toggleBtn = document.getElementById("mobile-toggle-btn");
+            const closeBtn = document.getElementById("sidebar-close-btn");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebar-overlay");
+
+            function openSidebar() {
+                sidebar.classList.add("mobile-active");
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove("mobile-active");
+                overlay.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+
+            if (toggleBtn) toggleBtn.addEventListener("click", openSidebar);
+            if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+            if (overlay) overlay.addEventListener("click", closeSidebar);
+        }
+
+        // 2. Tab Navigation System
+        function initTabNavigation() {
+            const menuLinks = document.querySelectorAll(".sidebar-menu-link[data-section]");
+            const sections = document.querySelectorAll(".dashboard-section");
+            const pageNavTitle = document.getElementById("page-nav-title");
+
+            menuLinks.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    const targetSectionId = this.getAttribute("data-section");
+                    if (!targetSectionId) return;
+
+                    e.preventDefault();
+
+                    sessionStorage.setItem("activeUserTab", targetSectionId);
+
+                    if (history.replaceState) {
+                        history.replaceState(null, null, '#' + targetSectionId);
+                    } else {
+                        window.location.hash = targetSectionId;
+                    }
+
+                    menuLinks.forEach(l => l.classList.remove("active"));
+                    this.classList.add("active");
+
+                    sections.forEach(s => s.classList.remove("active-section"));
+                    const targetSection = document.getElementById(targetSectionId);
+                    if (targetSection) {
+                        targetSection.classList.add("active-section");
+                    }
+
+                    const labelSpan = this.querySelector("span");
+                    if (labelSpan && pageNavTitle) {
+                        pageNavTitle.textContent = labelSpan.textContent;
+                    }
+
+                    const sidebar = document.getElementById("sidebar");
+                    if (sidebar) sidebar.classList.remove("mobile-active");
+                    const ov = document.getElementById("sidebar-overlay");
+                    if (ov) ov.classList.remove("active");
+                    document.body.style.overflow = "";
+
+                    setTimeout(() => {
+                        for (let key in charts) {
+                            if (charts[key]) charts[key].resize();
+                        }
+                    }, 50);
+                });
+            });
+        }
+
+        // 3. Logo Navigation Click: Reload Resident Dashboard directly to Main Page (Overview)
+        function initLogoNavigation() {
+            const logoBtn = document.getElementById("user-logo-btn");
+            if (logoBtn) {
+                logoBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem("activeUserTab");
+                    window.location.href = "userdashboard.html";
+                });
+            }
+        }
+
+        // 4. Precision Active Tab Restoration & Scroll to specific element
+        function restoreActiveTab() {
+            let rawHash = window.location.hash ? window.location.hash.substring(1) : null;
+            let savedTab = sessionStorage.getItem("activeUserTab");
+            let targetId = rawHash || savedTab || "overview-section";
+
+            let targetElement = document.getElementById(targetId);
+            let parentSection = null;
+
+            if (targetElement) {
+                if (targetElement.classList.contains("dashboard-section")) {
+                    parentSection = targetElement;
+                } else {
+                    parentSection = targetElement.closest(".dashboard-section");
+                }
+            }
+
+            if (!parentSection) {
+                parentSection = document.getElementById(savedTab) || document.getElementById("overview-section");
+            }
+
+            if (parentSection) {
+                const sectionId = parentSection.id;
+                sessionStorage.setItem("activeUserTab", sectionId);
+
+                const menuLinks = document.querySelectorAll(".sidebar-menu-link[data-section]");
+                menuLinks.forEach(l => {
+                    if (l.getAttribute("data-section") === sectionId) {
+                        l.classList.add("active");
+                        const labelSpan = l.querySelector("span");
+                        const pageNavTitle = document.getElementById("page-nav-title");
+                        if (labelSpan && pageNavTitle) {
+                            pageNavTitle.textContent = labelSpan.textContent;
+                        }
+                    } else {
+                        l.classList.remove("active");
+                    }
+                });
+
+                const sections = document.querySelectorAll(".dashboard-section");
+                sections.forEach(s => s.classList.remove("active-section"));
+                parentSection.classList.add("active-section");
+
+                setTimeout(() => {
+                    for (let key in charts) {
+                        if (charts[key]) charts[key].resize();
+                    }
+                }, 50);
+
+                if (targetElement && !targetElement.classList.contains("dashboard-section")) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                        targetElement.style.transition = "outline 0.3s ease, box-shadow 0.3s ease";
+                        targetElement.style.outline = "2px solid #D4E668";
+                        targetElement.style.outlineOffset = "4px";
+                        targetElement.style.boxShadow = "0 0 15px rgba(212, 230, 104, 0.4)";
+                        setTimeout(() => {
+                            targetElement.style.outline = "";
+                            targetElement.style.outlineOffset = "";
+                            targetElement.style.boxShadow = "";
+                        }, 2500);
+                    }, 150);
+                }
+            }
+        }
+
+        // 5. Initialize Chart.js Visualizations
+        function initCharts() {
+            Chart.defaults.color = '#8A99A4';
+            Chart.defaults.font.family = "'Poppins', sans-serif";
+            Chart.defaults.plugins.legend.labels.color = '#FFFFFF';
+
+            // Chart 1: Power Flow
+            const ctxPower = document.getElementById("chart-user-power-flow");
+            if (ctxPower) {
+                charts.power = new Chart(ctxPower, {
+                    type: 'line',
+                    data: {
+                        labels: ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+                        datasets: [
+                            {
+                                label: 'Solar Generation (kW)',
+                                data: [0.8, 3.2, 6.5, 8.4, 8.1, 5.2, 1.8, 0.0, 0.0],
+                                borderColor: '#D4E668',
+                                backgroundColor: 'rgba(212, 230, 104, 0.15)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Home Consumption (kW)',
+                                data: [1.2, 2.4, 2.1, 2.8, 3.1, 2.5, 3.8, 4.2, 2.6],
+                                borderColor: '#38BDF8',
+                                backgroundColor: 'transparent',
+                                borderDash: [4, 4],
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + ' kW' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 2: Room Energy Pie
+            const ctxRoomEnergy = document.getElementById("chart-user-room-energy");
+            if (ctxRoomEnergy) {
+                charts.roomEnergy = new Chart(ctxRoomEnergy, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['HVAC Living & Bed (42%)', 'Spa & Pool (24%)', 'Lighting (14%)', 'AV & Cinema (12%)', 'Appliances (8%)'],
+                        datasets: [{
+                            data: [42, 24, 14, 12, 8],
+                            backgroundColor: ['#38BDF8', '#10B981', '#D4E668', '#A855F7', '#E3B645'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '68%',
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+                    }
+                });
+            }
+
+            // Chart 3: Living Zones Microclimate
+            const ctxZoneTemp = document.getElementById("chart-user-zone-temp");
+            if (ctxZoneTemp) {
+                charts.zoneTemp = new Chart(ctxZoneTemp, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Master Suite', 'Great Salon', 'Cinema', 'Kitchen', 'Study', 'Spa Pool'],
+                        datasets: [
+                            {
+                                label: 'Temperature (°F)',
+                                data: [68.5, 71.0, 68.0, 72.0, 70.0, 84.0],
+                                backgroundColor: '#38BDF8',
+                                borderRadius: 6
+                            },
+                            {
+                                label: 'Humidity (%)',
+                                data: [44, 46, 42, 45, 48, 52],
+                                backgroundColor: '#D4E668',
+                                borderRadius: 6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 4: Air Quality (AQI)
+            const ctxAqi = document.getElementById("chart-user-aqi");
+            if (ctxAqi) {
+                charts.aqi = new Chart(ctxAqi, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                        datasets: [{
+                            label: 'Indoor AQI Index',
+                            data: [8, 9, 14, 18, 15, 12, 10],
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + ' AQI' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 5: Circadian Curve
+            const ctxCirc = document.getElementById("chart-user-circadian-curve");
+            if (ctxCirc) {
+                charts.circ = new Chart(ctxCirc, {
+                    type: 'line',
+                    data: {
+                        labels: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
+                        datasets: [
+                            {
+                                label: 'Circadian Color Temp (Kelvin)',
+                                data: [2700, 4200, 5600, 5200, 3200, 2400, 2000],
+                                borderColor: '#D4E668',
+                                backgroundColor: 'rgba(212, 230, 104, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Ambient Sun Curve',
+                                data: [2500, 4000, 5800, 5400, 3000, 2000, 1800],
+                                borderColor: '#E3B645',
+                                borderDash: [4, 4],
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + 'K' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 6: Security Activity
+            const ctxSecAct = document.getElementById("chart-user-security-activity");
+            if (ctxSecAct) {
+                charts.secAct = new Chart(ctxSecAct, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Authorized Entries',
+                            data: [14, 18, 12, 22, 26, 32, 20],
+                            backgroundColor: '#10B981',
+                            borderRadius: 6,
+                            barPercentage: 0.65,
+                            categoryPercentage: 0.75
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                left: 0,
+                                right: 6,
+                                top: 0,
+                                bottom: 0
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                align: 'end',
+                                labels: {
+                                    boxWidth: 10,
+                                    boxHeight: 10,
+                                    padding: 8,
+                                    font: { size: 11 }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    font: { size: 10 },
+                                    maxRotation: 0,
+                                    autoSkip: false
+                                }
+                            },
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { font: { size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 7: Audio Latency
+            const ctxAudLat = document.getElementById("chart-user-audio-latency");
+            if (ctxAudLat) {
+                charts.audLat = new Chart(ctxAudLat, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Living Salon (FLAC)', 'Master Bed (Lo-Fi)', 'Cinema (Atmos)', 'Poolside (70V)', 'Dining Cove'],
+                        datasets: [{
+                            label: 'Sync Offset (ms)',
+                            data: [0.2, 0.4, 0.1, 0.6, 0.3],
+                            backgroundColor: '#A855F7',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + ' ms' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 8: Solar Energy Curve
+            const ctxEnergyCurve = document.getElementById("chart-user-energy-curve");
+            if (ctxEnergyCurve) {
+                charts.energyCurve = new Chart(ctxEnergyCurve, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                        datasets: [
+                            {
+                                label: 'Solar Production',
+                                data: [0, 0, 3.4, 8.4, 5.1, 0.2, 0],
+                                borderColor: '#E3B645',
+                                backgroundColor: 'rgba(227, 182, 69, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Battery Discharge',
+                                data: [1.8, 1.4, 0.2, 0, 0, 2.8, 2.2],
+                                borderColor: '#10B981',
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 9: Financial Savings
+            const ctxSavings = document.getElementById("chart-user-savings");
+            if (ctxSavings) {
+                charts.savings = new Chart(ctxSavings, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                        datasets: [{
+                            label: 'Monthly Savings ($)',
+                            data: [195, 210, 245, 260, 280, 310, 325, 340, 285],
+                            backgroundColor: '#D4E668',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => '$' + v }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 10: Automation Freq
+            const ctxAutoFreq = document.getElementById("chart-user-automation-freq");
+            if (ctxAutoFreq) {
+                charts.autoFreq = new Chart(ctxAutoFreq, {
+                    type: 'line',
+                    data: {
+                        labels: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
+                        datasets: [{
+                            label: 'Automations Executed',
+                            data: [28, 45, 62, 54, 88, 70, 18],
+                            borderColor: '#38BDF8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

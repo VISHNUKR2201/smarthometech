@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Smart Home IoT Engineering Admin Hub</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/logo.webp" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #D4E668;
+            --primary-glow: rgba(212, 230, 104, 0.2);
+            --primary-hover: #e0f278;
+            --bg-main: #0E1317;
+            --bg-card: #161D22;
+            --bg-card-hover: #1C252B;
+            --bg-sidebar: #12181C;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(212, 230, 104, 0.4);
+            --text-main: #FFFFFF;
+            --text-muted: #CCD6DC;
+            --text-dim: #8A99A4;
+            --accent-gold: #E3B645;
+            --accent-cyan: #38BDF8;
+            --accent-purple: #A855F7;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --sidebar-width: 280px;
+            --header-height: 75px;
+            --transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Layout Container */
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .sidebar-badge {
+            background: rgba(212, 230, 104, 0.15);
+            border: 1px solid rgba(212, 230, 104, 0.3);
+            color: var(--primary);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-close-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 18px 12px;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-category-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-dim);
+            padding: 12px 14px 4px;
+        }
+
+        .sidebar-menu-item {
+            width: 100%;
+        }
+
+        .sidebar-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .sidebar-menu-link i {
+            font-size: 1.05rem;
+            width: 22px;
+            text-align: center;
+            color: var(--text-dim);
+            transition: var(--transition);
+        }
+
+        .sidebar-menu-link:hover {
+            color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .sidebar-menu-link:hover i {
+            color: var(--primary);
+        }
+
+        .sidebar-menu-link.active {
+            color: #12181C;
+            background: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-menu-link.active i {
+            color: #12181C;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            padding: 2px 7px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sidebar-menu-link.active .menu-badge {
+            background: rgba(0, 0, 0, 0.2);
+            color: #12181C;
+        }
+
+        .sidebar-footer {
+            padding: 18px 20px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .user-profile-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        /* Main Panel */
+        .main-panel {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-main);
+        }
+
+        /* Top Sticky Header */
+        .top-header {
+            height: var(--header-height);
+            background-color: rgba(18, 24, 28, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .header-title-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            font-family: 'Jost', sans-serif;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .header-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .header-btn:hover {
+            color: var(--primary);
+            border-color: var(--border-highlight);
+            background-color: rgba(212, 230, 104, 0.05);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--accent-red);
+        }
+
+        /* Content Body & Tab Switching */
+        .content-body {
+            padding: 28px 32px;
+            flex: 1;
+        }
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active-section {
+            display: block;
+            animation: fadeInSection 0.35s ease-out;
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Banner */
+        .section-header-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: linear-gradient(135deg, rgba(22, 29, 34, 0.7) 0%, rgba(18, 24, 28, 0.9) 100%);
+            border: 1px solid var(--border-color);
+            padding: 20px 24px;
+            border-radius: var(--radius-lg);
+        }
+
+        .section-title-desc h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Jost', sans-serif;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title-desc p {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+        }
+
+        .btn-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-lime {
+            background: var(--primary);
+            color: #12181C;
+            border: 1px solid var(--primary);
+            font-weight: 700;
+            font-size: 0.84rem;
+            padding: 9px 18px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: var(--transition);
+        }
+
+        .btn-lime:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 0.84rem;
+            padding: 9px 16px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+        }
+
+        .metric-value {
+            font-size: 1.65rem;
+            font-weight: 700;
+            font-family: 'Jost', sans-serif;
+            color: var(--text-main);
+            margin: 2px 0;
+        }
+
+        .metric-trend {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: var(--accent-green);
+        }
+
+        .trend-cyan {
+            color: var(--accent-cyan);
+        }
+
+        .trend-purple {
+            color: var(--accent-purple);
+        }
+
+        .trend-gold {
+            color: var(--accent-gold);
+        }
+
+        .metric-icon-wrap {
+            width: 46px;
+            height: 46px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .icon-lime {
+            background: rgba(212, 230, 104, 0.12);
+            color: var(--primary);
+        }
+
+        .icon-cyan {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--accent-cyan);
+        }
+
+        .icon-purple {
+            background: rgba(168, 85, 247, 0.12);
+            color: var(--accent-purple);
+        }
+
+        .icon-green {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-green);
+        }
+
+        .icon-gold {
+            background: rgba(227, 182, 69, 0.12);
+            color: var(--accent-gold);
+        }
+
+        /* Showcase Photography Cards */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .showcase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .showcase-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .showcase-img-wrap {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .showcase-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .showcase-card:hover .showcase-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .showcase-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(14, 19, 23, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .showcase-status {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(16, 185, 129, 0.9);
+            color: #FFFFFF;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 12px;
+        }
+
+        .showcase-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .showcase-body h3 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .showcase-body p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .showcase-specs-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .spec-label {
+            font-size: 0.66rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .spec-val {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .showcase-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .showcase-action-link {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .showcase-action-link:hover {
+            color: var(--primary-hover);
+            transform: translateX(3px);
+        }
+
+        /* Charts Panels */
+        .panel-grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .panel-grid-equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .panel-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .dash-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            font-family: 'Jost', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+        }
+
+        .chart-box {
+            position: relative;
+            height: 270px;
+            width: 100%;
+        }
+
+        /* Status Badges */
+        .badge-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-warning {
+            background: rgba(227, 182, 69, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(227, 182, 69, 0.3);
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-cyan {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-size: 0.72rem;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Tables */
+        .table-wrap {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.84rem;
+        }
+
+        .admin-table th {
+            padding: 12px 16px;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+        }
+
+        .admin-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tbl-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .tbl-btn:hover {
+            background: var(--primary);
+            color: #12181C;
+            border-color: var(--primary);
+        }
+
+        /* Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 95;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1280px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .showcase-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .panel-grid-2,
+            .panel-grid-equal {
+                grid-template-columns: 1fr;
+            }
+            .panel-grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.mobile-active {
+                transform: translateX(0);
+            }
+            .sidebar-close-btn {
+                display: block;
+            }
+            .main-panel {
+                margin-left: 0;
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            .top-header {
+                padding: 0 18px;
+            }
+            .content-body {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+            .panel-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .header-title {
+                font-size: 1.15rem;
+            }
+            .section-title-desc h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="dashboard-wrapper">
+        <!-- ==============================================
+             SIDEBAR NAVIGATION
+             ============================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="admindashboard.html" class="logo-wrapper" id="dashboard-logo-btn" title="Reload Admin Dashboard">
+                    <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                    <span class="sidebar-badge">IoT Core</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close Sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="menu-category-label">Central Control</li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link active" data-section="overview-section">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>System Topology</span>
+                        <span class="menu-badge">Live</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="living-zones-section">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Smart Living Zones</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="circadian-section">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Circadian Lighting</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="security-section">
+                        <i class="fas fa-shield-virus"></i>
+                        <span>Biometrics & Vault</span>
+                        <span class="menu-badge" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green);">AES-256</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="energy-section">
+                        <i class="fas fa-solar-panel"></i>
+                        <span>Microgrid & Solar</span>
+                    </a>
+                </li>
+
+                <li class="menu-category-label">Hardware & Mesh</li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="devices-section">
+                        <i class="fas fa-microchip"></i>
+                        <span>Matter & Thread Nodes</span>
+                        <span class="menu-badge">148 Nodes</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="knx-section">
+                        <i class="fas fa-network-wired"></i>
+                        <span>KNX Low-Voltage Bus</span>
+                        <span class="menu-badge">Wired TP</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-link" data-section="scenes-section">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Sub-20ms Scene Engine</span>
+                        <span class="menu-badge" style="background: rgba(212, 230, 104, 0.2); color: var(--primary);">14.2ms</span>
+                    </a>
+                </li>
+
+                <li class="menu-category-label">Navigation</li>
+                <li class="sidebar-menu-item">
+                    <a href="index.html" class="sidebar-menu-link">
+                        <i class="fas fa-home"></i>
+                        <span>Website Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="login.html" class="sidebar-menu-link" style="color: var(--accent-red);">
+                        <i class="fas fa-sign-out-alt" style="color: var(--accent-red);"></i>
+                        <span>Disconnect Console</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-preview">
+                    <img src="images/team-1.webp" alt="Administrator" class="user-avatar" id="sidebar-admin-avatar">
+                    <div class="user-info">
+                        <div class="user-name" id="sidebar-admin-name">IoT Administrator</div>
+                        <div class="user-role" id="sidebar-admin-role">admin@stacklysmart.com</div>
+                    </div>
+                    <a href="404.html?from=admindashboard.html&section=admin-btn-sidebar-settings" id="admin-btn-sidebar-settings" style="color: var(--text-dim); text-decoration: none;" title="Admin Settings">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ==============================================
+             MAIN PANEL
+             ============================================== -->
+        <main class="main-panel">
+            <!-- Top Sticky Header -->
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <button class="mobile-nav-toggle" id="mobile-toggle-btn" aria-label="Toggle Navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="header-title-section">
+                        <h1 class="header-title" id="page-nav-title">System Topology</h1>
+                        <span class="header-subtitle">Stackly Local-First Autonomous Edge Console</span>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <a href="404.html?from=admindashboard.html&section=admin-btn-header-bell" id="admin-btn-header-bell" class="header-btn" title="System Notifications">
+                        <i class="far fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Body Area -->
+            <div class="content-body">
+                
+                <!-- ==============================================
+                     TAB 1: SYSTEM TOPOLOGY (OVERVIEW)
+                     ============================================== -->
+                <section id="overview-section" class="dashboard-section active-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>System Topology & Edge Core</h2>
+                            <p>Real-time edge compute, thread mesh telemetry & sub-20ms private local scene routing.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-overview-ota" id="admin-btn-overview-ota" class="btn-outline">
+                                <i class="fas fa-sync-alt"></i> Deploy OTA Config
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-overview-audit" id="admin-btn-overview-audit" class="btn-lime">
+                                <i class="fas fa-download"></i> System Audit PDF
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4 Metric Cards -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Active Edge Nodes</span>
+                                <span class="metric-value">148 / 148</span>
+                                <span class="metric-trend trend-up">
+                                    <i class="fas fa-check-circle"></i> 100% Online · 0 Faults
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-lime">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Edge Mesh Latency</span>
+                                <span class="metric-value">14.2 ms</span>
+                                <span class="metric-trend trend-cyan">
+                                    <i class="fas fa-bolt"></i> Sub-20ms Local SLA
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-cyan">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Microgrid Autonomy</span>
+                                <span class="metric-value">94.8%</span>
+                                <span class="metric-trend trend-up">
+                                    <i class="fas fa-leaf"></i> 18.4 kWh Solar Stored
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-green">
+                                <i class="fas fa-solar-panel"></i>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-info">
+                                <span class="metric-title">Zero-Trust Vault</span>
+                                <span class="metric-value">AES-256</span>
+                                <span class="metric-trend trend-purple">
+                                    <i class="fas fa-shield-alt"></i> 16 Biometric Locks Secure
+                                </span>
+                            </div>
+                            <div class="metric-icon-wrap icon-purple">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Project Cards with Real Images -->
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/sebastian-scholz-nuki-IJkSskfEqrM-unsplash.webp" alt="Biometric Access">
+                                <span class="showcase-badge">Hardware Vault</span>
+                                <span class="showcase-status"><i class="fas fa-circle" style="font-size: 0.55rem;"></i> Locked</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Front Master Portico Access</h3>
+                                <p>Decentralized edge facial recognition & tamper-proof motorized deadbolts running local neural weights.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Latency</span><span class="spec-val">12ms</span></div>
+                                    <div><span class="spec-label">Protocol</span><span class="spec-val">Thread</span></div>
+                                    <div><span class="spec-label">Encryption</span><span class="spec-val">AES-256</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Online</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-overview-card1" id="admin-btn-overview-card1" class="showcase-action-link">Configure <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/vitaly-gariev-TTcTl02R9Ts-unsplash.webp" alt="Circadian Architecture">
+                                <span class="showcase-badge">Circadian Hub</span>
+                                <span class="showcase-status"><i class="fas fa-circle" style="font-size: 0.55rem;"></i> 4,200K</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Grand Living & Tunable White</h3>
+                                <p>48 DALI-2 high-CRI fixtures synchronized to astronomical sun position at 4,000K daylight spectrum.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Fixtures</span><span class="spec-val">48 Units</span></div>
+                                    <div><span class="spec-label">Bus Load</span><span class="spec-val">680 Lux</span></div>
+                                    <div><span class="spec-label">Health</span><span class="spec-val">100%</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Synced</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-overview-card2" id="admin-btn-overview-card2" class="showcase-action-link">Adjust <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/dan-lefebvre-RFAHj4tI37Y-unsplash.webp" alt="Private Cinema">
+                                <span class="showcase-badge">Media Engine</span>
+                                <span class="showcase-status"><i class="fas fa-circle" style="font-size: 0.55rem;"></i> Standby</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Private Dolby Atmos 9.4.4</h3>
+                                <p>Acoustic room calibration, motorized micro-perforated projection mask, and intelligent HVAC baffling.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Channels</span><span class="spec-val">9.4.4</span></div>
+                                    <div><span class="spec-label">Noise Floor</span><span class="spec-val">&lt; NC-20</span></div>
+                                    <div><span class="spec-label">4K Video</span><span class="spec-val">120Hz</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Calibrated</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-overview-card3" id="admin-btn-overview-card3" class="showcase-action-link">Inspect <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-chart-line"></i> Estate Power Telemetry: Solar vs Load (kW)</span>
+                                <span class="badge-active">Live Telemetry</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-topology-load"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-chart-pie"></i> IoT Protocol Mesh Distribution</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-protocols-pie"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Critical Subsystems Table -->
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <span class="card-title"><i class="fas fa-server"></i> Core Edge Infrastructure Gateways</span>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-overview-allgateways" id="admin-btn-overview-allgateways" class="tbl-btn">View All Gateways</a>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Gateway Service</th>
+                                        <th>Physical Interface</th>
+                                        <th>IP / Mesh Route</th>
+                                        <th>Local Latency</th>
+                                        <th>Health Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Stackly Edge Coordinator Pro</strong></td>
+                                        <td>Gigabit PoE Isolated</td>
+                                        <td>192.168.10.1 (Static)</td>
+                                        <td>0.8 ms</td>
+                                        <td><span class="badge-active">Operational</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-diag-coordinator" id="admin-btn-diag-coordinator" class="tbl-btn">Diagnostics</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OpenThread Border Router #01</strong></td>
+                                        <td>Dual 802.15.4 Radio</td>
+                                        <td>fd00:7777::1 (IPv6)</td>
+                                        <td>4.2 ms</td>
+                                        <td><span class="badge-active">Operational</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-diag-openthread" id="admin-btn-diag-openthread" class="tbl-btn">Diagnostics</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>KNX/IP Line Router Bridge</strong></td>
+                                        <td>Twisted Pair Bus 29V</td>
+                                        <td>192.168.10.15</td>
+                                        <td>2.1 ms</td>
+                                        <td><span class="badge-active">Operational</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-diag-knxrouter" id="admin-btn-diag-knxrouter" class="tbl-btn">Diagnostics</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>DALI-2 Multi-Master Controller</strong></td>
+                                        <td>Isolated 16V DALI Loop</td>
+                                        <td>Internal Serial Hub</td>
+                                        <td>3.4 ms</td>
+                                        <td><span class="badge-active">Operational</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-diag-dalicontroller" id="admin-btn-diag-dalicontroller" class="tbl-btn">Diagnostics</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 2: SMART LIVING ZONES
+                     ============================================== -->
+                <section id="living-zones-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Smart Living Zones & Spatial Automation</h2>
+                            <p>Multi-zone HVAC variable refrigerant flow, radiant floor heating & mmWave occupancy boundaries.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-zones-export" id="admin-btn-zones-export" class="btn-outline">
+                                <i class="fas fa-chart-area"></i> Export Zone Telemetry
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-zones-syncall" id="admin-btn-zones-syncall" class="btn-lime">
+                                <i class="fas fa-sliders-h"></i> Sync All to Eco
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/vitaly-gariev-5IDx9CG_mqM-unsplash.webp" alt="Master Suite">
+                                <span class="showcase-badge">Zone 01 • Master Suite</span>
+                                <span class="showcase-status">68.5°F</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Master Sanctuary & Bath</h3>
+                                <p>Independent radiant floor warming, circadian cove dimming & silent variable airflow.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Set Temp</span><span class="spec-val">68.5°F</span></div>
+                                    <div><span class="spec-label">Humid</span><span class="spec-val">44%</span></div>
+                                    <div><span class="spec-label">CO2</span><span class="spec-val">420 ppm</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Occupied</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-zonecard-master" id="admin-btn-zonecard-master" class="showcase-action-link">Preset <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/sable-flow-Up8eeDI5-sg-unsplash.webp" alt="Great Salon">
+                                <span class="showcase-badge">Zone 02 • Great Salon</span>
+                                <span class="showcase-status">71.0°F</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Great Salon & Gallery</h3>
+                                <p>Double-height volume airflow management, motorized solar shades, and artwork lighting scene.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Set Temp</span><span class="spec-val">71.0°F</span></div>
+                                    <div><span class="spec-label">Shades</span><span class="spec-val">75% Open</span></div>
+                                    <div><span class="spec-label">Airflow</span><span class="spec-val">340 CFM</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Occupied</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-zonecard-salon" id="admin-btn-zonecard-salon" class="showcase-action-link">Preset <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/wemel-wood-1d3fWPgMDOU-unsplash.webp" alt="Chef's Kitchen">
+                                <span class="showcase-badge">Zone 03 • Culinary</span>
+                                <span class="showcase-status">72.0°F</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Chef's Kitchen & Wine Vault</h3>
+                                <p>Dedicated ventilation exhaust coupling, wine cellar chiller monitoring at 55°F / 70% RH.</p>
+                                <div class="showcase-specs-row">
+                                    <div><span class="spec-label">Kitchen</span><span class="spec-val">72.0°F</span></div>
+                                    <div><span class="spec-label">Wine Vault</span><span class="spec-val">55.2°F</span></div>
+                                    <div><span class="spec-label">AQI</span><span class="spec-val">12 (Pure)</span></div>
+                                </div>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Optimal</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-zonecard-cinema" id="admin-btn-zonecard-cinema" class="showcase-action-link">Preset <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-equal">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-thermometer-half"></i> Zone Microclimate Variance (°F)</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-zone-climates"></canvas>
+                            </div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-wind"></i> Air Quality Index (AQI Breakdown)</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-aqi-radar"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <span class="card-title"><i class="fas fa-layer-group"></i> Active Spatial Microclimate Zones</span>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Zone Name</th>
+                                        <th>HVAC Controller</th>
+                                        <th>Target Temp</th>
+                                        <th>Actual Temp</th>
+                                        <th>Humidity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Master Sanctuary</strong></td>
+                                        <td>Daikin VRV-IV (Modbus)</td>
+                                        <td>68.5°F</td>
+                                        <td>68.6°F</td>
+                                        <td>44%</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-zonerow-master" id="admin-btn-zonerow-master" class="tbl-btn">Modify</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Great Salon & Gallery</strong></td>
+                                        <td>Daikin VRV-IV (Modbus)</td>
+                                        <td>71.0°F</td>
+                                        <td>70.9°F</td>
+                                        <td>46%</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-zonerow-salon" id="admin-btn-zonerow-salon" class="tbl-btn">Modify</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dolby Atmos Cinema</strong></td>
+                                        <td>Mitsubishi Heavy Inverter</td>
+                                        <td>68.0°F</td>
+                                        <td>68.1°F</td>
+                                        <td>42%</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-zonerow-cinema" id="admin-btn-zonerow-cinema" class="tbl-btn">Modify</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Chef's Culinary Kitchen</strong></td>
+                                        <td>Daikin VRV-IV (Modbus)</td>
+                                        <td>72.0°F</td>
+                                        <td>72.1°F</td>
+                                        <td>45%</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-zonerow-kitchen" id="admin-btn-zonerow-kitchen" class="tbl-btn">Modify</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 3: CIRCADIAN LIGHTING
+                     ============================================== -->
+                <section id="circadian-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Circadian Lighting & DALI-2 Driver Topology</h2>
+                            <p>Astronomical clock Kelvin tracking from 2,200K sunset amber to 5,600K mid-day alertness spectrum.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-circadian-spectrogram" id="admin-btn-circadian-spectrogram" class="btn-outline">
+                                <i class="fas fa-eye"></i> View Spectrogram
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-circadian-syncsolar" id="admin-btn-circadian-syncsolar" class="btn-lime">
+                                <i class="fas fa-sun"></i> Recalibrate Solar Arc
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-sun"></i> 24h Biodynamic Kelvin & Lux Schedule</span>
+                                <span class="badge-active">Active Curve: Natural Sun</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-circadian-curve"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-bolt"></i> DALI-2 Loop Channel Loads (Watts)</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-dali-loads"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/christian-agbede-73flUsvIWnQ-unsplash.webp" alt="Recessed Downlights">
+                                <span class="showcase-badge">DALI Loop 01</span>
+                                <span class="showcase-status">CRI 98</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Architectural Downlights</h3>
+                                <p>Sub-1% smooth dimming with zero flicker across high-ceiling gallery fixtures.</p>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">32 Channels</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-circadiancard-1" id="admin-btn-circadiancard-1" class="showcase-action-link">Channel Map <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/sian-wynn-jones-YTG6kkQweck-unsplash.webp" alt="Linear LED Cove">
+                                <span class="showcase-badge">DALI Loop 02</span>
+                                <span class="showcase-status">2,200K - 6,500K</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Linear Architectural Cove</h3>
+                                <p>Indirect perimeter illumination with smooth Kelvin transitions for biological sleep regulation.</p>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">16 Channels</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-circadiancard-2" id="admin-btn-circadiancard-2" class="showcase-action-link">Channel Map <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/jakub-zerdzicki-023dpw6VCRU-unsplash.webp" alt="Landscape Lighting">
+                                <span class="showcase-badge">DALI Loop 03</span>
+                                <span class="showcase-status">2,400K Warm</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Botanical Landscape Uplighting</h3>
+                                <p>Dark-Sky compliant low-voltage LED drivers illuminating ancient olive trees and pool reflection.</p>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">24 Channels</span>
+                                    <a href="404.html?from=admindashboard.html&section=admin-btn-circadiancard-3" id="admin-btn-circadiancard-3" class="showcase-action-link">Channel Map <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 4: BIOMETRICS & VAULT
+                     ============================================== -->
+                <section id="security-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Perimeter Defense & Biometric Security</h2>
+                            <p>Decentralized edge neural facial recognition, physical interlocks, and encrypted audit logging.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-security-lockdown" id="admin-btn-security-lockdown" class="btn-outline" style="border-color: rgba(239, 68, 68, 0.4); color: var(--accent-red);">
+                                <i class="fas fa-lock"></i> Armed (Full Perimeter)
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-security-exportaudit" id="admin-btn-security-exportaudit" class="btn-lime">
+                                <i class="fas fa-file-shield"></i> Export Audit Log
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-chart-line"></i> 24h Authorized Access Events</span>
+                                <span class="badge-active">0 Breach Attempts</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-security-events"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-shield-alt"></i> Sensor Inventory</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-security-sensors"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <span class="card-title"><i class="fas fa-user-shield"></i> Biometric Nodes & Access Terminals</span>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Terminal Location</th>
+                                        <th>Authentication Mode</th>
+                                        <th>Local Neural Latency</th>
+                                        <th>Power / Relay</th>
+                                        <th>State</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Front Master Gate</strong></td>
+                                        <td>3D Structured Light + UWB</td>
+                                        <td>14 ms</td>
+                                        <td>PoE IEEE 802.3at</td>
+                                        <td><span class="badge-active">Secured</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-secrow-1" id="admin-btn-secrow-1" class="tbl-btn">Inspect</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Grand Foyer Pivot Door</strong></td>
+                                        <td>Capacitive Fingerprint + PIN</td>
+                                        <td>8 ms</td>
+                                        <td>24V DC Internal Battery</td>
+                                        <td><span class="badge-active">Secured</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-secrow-2" id="admin-btn-secrow-2" class="tbl-btn">Inspect</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Subterranean Wine Vault</strong></td>
+                                        <td>Iris Biometric Scanner</td>
+                                        <td>18 ms</td>
+                                        <td>UPS Protected Isolated</td>
+                                        <td><span class="badge-active">Secured</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-secrow-3" id="admin-btn-secrow-3" class="tbl-btn">Inspect</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Safe Room Reinforced Core</strong></td>
+                                        <td>Multi-Factor Keycard + Bio</td>
+                                        <td>11 ms</td>
+                                        <td>Hardwired Fail-Secure</td>
+                                        <td><span class="badge-active">Secured</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-secrow-4" id="admin-btn-secrow-4" class="tbl-btn">Inspect</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 5: MICROGRID & SOLAR
+                     ============================================== -->
+                <section id="energy-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Residential Microgrid & Clean Energy Storage</h2>
+                            <p>Rooftop bifacial solar array, high-voltage battery storage, and dynamic EV smart charging orchestration.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-energy-island" id="admin-btn-energy-island" class="btn-outline">
+                                <i class="fas fa-toggle-on"></i> Islanding Ready
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-energy-export" id="admin-btn-energy-export" class="btn-lime">
+                                <i class="fas fa-file-invoice-dollar"></i> Net Metering Statement
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-equal">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-solar-panel"></i> 24h Solar Production vs Load (kWh)</span>
+                                <span class="badge-active">Net Exporter</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-energy-flow"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-battery-full"></i> High-Voltage Battery Storage (BESS)</span>
+                                <span class="badge-active">94% State of Charge</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-battery-soc"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <span class="card-title"><i class="fas fa-charging-station"></i> Inverters & Battery Ingestion</span>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Unit Component</th>
+                                        <th>Rated Capacity</th>
+                                        <th>Current Output</th>
+                                        <th>Efficiency</th>
+                                        <th>Thermal Temp</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Enphase Microinverter IQ8+ Array</strong></td>
+                                        <td>18.5 kW Peak DC</td>
+                                        <td>14.2 kW Live</td>
+                                        <td>97.6%</td>
+                                        <td>42°C</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-energyrow-1" id="admin-btn-energyrow-1" class="tbl-btn">Manage</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tesla Powerwall 3 LFP Bank</strong></td>
+                                        <td>27.0 kWh Reserve</td>
+                                        <td>+4.8 kW (Charging)</td>
+                                        <td>94.5%</td>
+                                        <td>26°C</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-energyrow-2" id="admin-btn-energyrow-2" class="tbl-btn">Manage</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Stackly Level 2 EV Fast Charger</strong></td>
+                                        <td>22 kW 3-Phase</td>
+                                        <td>11.0 kW (Active)</td>
+                                        <td>99.1%</td>
+                                        <td>31°C</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-energyrow-3" id="admin-btn-energyrow-3" class="tbl-btn">Manage</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Grid Automatic Transfer Switch (ATS)</strong></td>
+                                        <td>200A Service</td>
+                                        <td>0.0 kW (Islanded)</td>
+                                        <td>100%</td>
+                                        <td>22°C</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-energyrow-4" id="admin-btn-energyrow-4" class="tbl-btn">Manage</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 6: MATTER & THREAD NODES
+                     ============================================== -->
+                <section id="devices-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Matter over Thread Mesh Infrastructure</h2>
+                            <p>Self-healing IPv6 wireless fabric connecting 148 nodes across 8,500 sq ft without cloud bridges.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-devices-ota" id="admin-btn-devices-ota" class="btn-outline">
+                                <i class="fas fa-microchip"></i> OTA Batch Update
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-devices-commission" id="admin-btn-devices-commission" class="btn-lime">
+                                <i class="fas fa-plus"></i> Commission Matter Node
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-project-diagram"></i> Thread Mesh Hop Topology & Signal RSSI</span>
+                                <span class="badge-active">Average RSSI: -48 dBm</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-thread-rssi"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-pie-chart"></i> Device Clusters</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-device-clusters"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <span class="card-title"><i class="fas fa-cubes"></i> Provisioned Matter 1.3 Node Inventory</span>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Node Identifier</th>
+                                        <th>Endpoint Type</th>
+                                        <th>Thread Role</th>
+                                        <th>LQI / RSSI</th>
+                                        <th>Battery / Mains</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>NODE-TH-001 (Master Climate)</strong></td>
+                                        <td>Matter Thermostat</td>
+                                        <td>Full Thread Device (Router)</td>
+                                        <td>255 / -42 dBm</td>
+                                        <td>Mains 24V AC</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-devicerow-1" id="admin-btn-devicerow-1" class="tbl-btn">Configure</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NODE-TH-024 (Living Shade Motor)</strong></td>
+                                        <td>Window Covering Cluster</td>
+                                        <td>Minimal End Device (MED)</td>
+                                        <td>248 / -49 dBm</td>
+                                        <td>Li-ion Solar (98%)</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-devicerow-2" id="admin-btn-devicerow-2" class="tbl-btn">Configure</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NODE-TH-068 (Terrace mmWave Sensor)</strong></td>
+                                        <td>Occupancy Sensing Cluster</td>
+                                        <td>Full Thread Device (Router)</td>
+                                        <td>252 / -44 dBm</td>
+                                        <td>Mains 12V DC</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-devicerow-3" id="admin-btn-devicerow-3" class="tbl-btn">Configure</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NODE-TH-102 (Gallery Dimmer Switch)</strong></td>
+                                        <td>Color Control Switch</td>
+                                        <td>Full Thread Device (Router)</td>
+                                        <td>255 / -38 dBm</td>
+                                        <td>Mains 120V Neutral</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-devicerow-4" id="admin-btn-devicerow-4" class="tbl-btn">Configure</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NODE-TH-148 (Water Leak Actuator)</strong></td>
+                                        <td>Flow Measurement / Valve</td>
+                                        <td>Sleepy End Device (SED)</td>
+                                        <td>240 / -54 dBm</td>
+                                        <td>Battery CR123A (100%)</td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-devicerow-5" id="admin-btn-devicerow-5" class="tbl-btn">Configure</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 7: KNX LOW-VOLTAGE BUS
+                     ============================================== -->
+                <section id="knx-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>KNX Twisted-Pair Physical Bus Backbone</h2>
+                            <p>Hardwired 29V DC industrial bus connecting DIN-rail relay actuators, DALI gateways, and keypads.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-knx-export" id="admin-btn-knx-export" class="btn-outline">
+                                <i class="fas fa-file-code"></i> Export ETS6 Project
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-knx-scan" id="admin-btn-knx-scan" class="btn-lime">
+                                <i class="fas fa-search"></i> Bus Diagnostic Scan
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-wave-square"></i> KNX TP Bus Telegram Traffic (Telegrams/sec)</span>
+                                <span class="badge-active">Bus Load: 12.4% (Optimal)</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-knx-traffic"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-network-wired"></i> Group Address Allocations</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-knx-groups"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/matus-gocman-aJHlr00JEEI-unsplash.webp" alt="DIN Rail Cabinet">
+                                <span class="showcase-badge">Cabinet Main A</span>
+                                <span class="showcase-status">29.4V DC</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Main DIN Rail Automation Cabinet</h3>
+                                <p>Schneider KNX 640mA choke power supply with battery backup and 24-channel 16A switching actuators.</p>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">Normal 22°C</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-dim);">Line 1.1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/jonas-leupe-dZmNJKFDuVI-unsplash.webp" alt="Keypad Architecture">
+                                <span class="showcase-badge">Basalte Keypads</span>
+                                <span class="showcase-status">OLED Active</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Architectural Touch Panels</h3>
+                                <p>Solid aluminum precision-milled multi-touch keypads with integrated temperature sensors and RGB LED status.</p>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">14 Units Synced</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-dim);">Line 1.2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card">
+                            <div class="showcase-img-wrap">
+                                <img src="img/dcbel-4Mue3wkpoIw-unsplash.webp" alt="HVAC Actuators">
+                                <span class="showcase-badge">HVAC Actuation</span>
+                                <span class="showcase-status">0-10V Modulating</span>
+                            </div>
+                            <div class="showcase-body">
+                                <h3>Hydronic Radiant Manifold Actuators</h3>
+                                <p>Electrothermal valve controllers regulating heated limestone floors across all private ensuite bathrooms.</p>
+                                <div class="showcase-footer">
+                                    <span class="badge-active">12 Loops Active</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-dim);">Line 1.3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 8: SCENES & AUTOMATION ENGINE
+                     ============================================== -->
+                <section id="scenes-section" class="dashboard-section">
+                    <div class="section-header-banner">
+                        <div class="section-title-desc">
+                            <h2>Sub-20ms Deterministic Scene Engine</h2>
+                            <p>State-machine rule compiler executing multi-protocol triggers in under 20ms without external dependencies.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-scenes-export" id="admin-btn-scenes-export" class="btn-outline">
+                                <i class="fas fa-file-code"></i> Export Logic AST
+                            </a>
+                            <a href="404.html?from=admindashboard.html&section=admin-btn-scenes-compile" id="admin-btn-scenes-compile" class="btn-lime">
+                                <i class="fas fa-play"></i> Recompile State Machine
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid-2">
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-stopwatch"></i> Scene Trigger Execution Breakdown (ms)</span>
+                                <span class="badge-active">Total Average SLA: 14.2 ms</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-scene-latency"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dash-card">
+                            <div class="card-header-row">
+                                <span class="card-title"><i class="fas fa-bolt"></i> Hourly Trigger Frequency</span>
+                            </div>
+                            <div class="chart-box">
+                                <canvas id="chart-trigger-freq"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header-row">
+                            <span class="card-title"><i class="fas fa-code-branch"></i> Core Active Automation Pipelines</span>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Scene Pipeline</th>
+                                        <th>Trigger Condition</th>
+                                        <th>Choreographed Actions</th>
+                                        <th>Execution Latency</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>"Good Morning Awakening"</strong></td>
+                                        <td>Time: 06:45 AM & Lux &lt; 50</td>
+                                        <td>Shades 60% + 3000K ramp + Floor heating 72°F</td>
+                                        <td>12.4 ms</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-scenerow-1" id="admin-btn-scenerow-1" class="tbl-btn">Execute</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>"Private Dolby Cinema Start"</strong></td>
+                                        <td>Basalte Keypad Button 4 Press</td>
+                                        <td>Screen drop + AVR Atmos 82dB + 8% Cove Dim</td>
+                                        <td>14.8 ms</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-scenerow-2" id="admin-btn-scenerow-2" class="tbl-btn">Execute</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>"Perimeter Night Secure"</strong></td>
+                                        <td>Geofence + Astronomical Midnight</td>
+                                        <td>16 Deadbolts lock + AI beams arm + Landscape warm</td>
+                                        <td>9.2 ms</td>
+                                        <td><span class="badge-active">Active</span></td>
+                                        <td><a href="404.html?from=admindashboard.html&section=admin-btn-scenerow-3" id="admin-btn-scenerow-3" class="tbl-btn">Execute</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Store charts globally for resizing and dynamic switching
+        const charts = {};
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initAdminProfile();
+            initMobileNav();
+            initTabNavigation();
+            initLogoNavigation();
+            initCharts();
+            restoreActiveTab();
+
+            window.addEventListener("resize", function() {
+                for (let key in charts) {
+                    if (charts[key]) charts[key].resize();
+                }
+            });
+        });
+
+        // 0. Dynamic Logged In Admin Profile Loader
+        function initAdminProfile() {
+            try {
+                const stored = localStorage.getItem('currentUser');
+                if (stored) {
+                    const user = JSON.parse(stored);
+                    const email = user.email || 'admin@stacklysmart.com';
+                    const name = user.name || (email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1));
+                    
+                    const nameEl = document.getElementById('sidebar-admin-name');
+                    const roleEl = document.getElementById('sidebar-admin-role');
+
+                    if (nameEl) nameEl.textContent = name;
+                    if (roleEl) roleEl.textContent = email;
+                }
+            } catch (e) {
+                console.warn('Admin profile initialization error:', e);
+            }
+        }
+
+        // 1. Mobile Sidebar Navigation Drawer
+        function initMobileNav() {
+            const toggleBtn = document.getElementById("mobile-toggle-btn");
+            const closeBtn = document.getElementById("sidebar-close-btn");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebar-overlay");
+
+            function openSidebar() {
+                sidebar.classList.add("mobile-active");
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove("mobile-active");
+                overlay.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+
+            if (toggleBtn) toggleBtn.addEventListener("click", openSidebar);
+            if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+            if (overlay) overlay.addEventListener("click", closeSidebar);
+        }
+
+        // 2. Tab Navigation System
+        function initTabNavigation() {
+            const menuLinks = document.querySelectorAll(".sidebar-menu-link[data-section]");
+            const sections = document.querySelectorAll(".dashboard-section");
+            const pageNavTitle = document.getElementById("page-nav-title");
+
+            menuLinks.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    const targetSectionId = this.getAttribute("data-section");
+                    if (!targetSectionId) return;
+                    
+                    e.preventDefault();
+                    
+                    sessionStorage.setItem("activeDashboardTab", targetSectionId);
+                    
+                    if (history.replaceState) {
+                        history.replaceState(null, null, '#' + targetSectionId);
+                    } else {
+                        window.location.hash = targetSectionId;
+                    }
+                    
+                    menuLinks.forEach(l => l.classList.remove("active"));
+                    this.classList.add("active");
+
+                    sections.forEach(s => s.classList.remove("active-section"));
+                    const targetSection = document.getElementById(targetSectionId);
+                    if (targetSection) {
+                        targetSection.classList.add("active-section");
+                    }
+
+                    const labelSpan = this.querySelector("span");
+                    if (labelSpan && pageNavTitle) {
+                        pageNavTitle.textContent = labelSpan.textContent;
+                    }
+
+                    const sidebar = document.getElementById("sidebar");
+                    if (sidebar) sidebar.classList.remove("mobile-active");
+                    const ov = document.getElementById("sidebar-overlay");
+                    if (ov) ov.classList.remove("active");
+                    document.body.style.overflow = "";
+
+                    setTimeout(() => {
+                        for (let key in charts) {
+                            if (charts[key]) charts[key].resize();
+                        }
+                    }, 50);
+                });
+            });
+        }
+
+        // 3. Logo Click: Reload Admin Dashboard directly to Main Page (System Topology)
+        function initLogoNavigation() {
+            const logoBtn = document.getElementById("dashboard-logo-btn");
+            if (logoBtn) {
+                logoBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem("activeDashboardTab");
+                    window.location.href = "admindashboard.html";
+                });
+            }
+        }
+
+        // 4. Precision Active Tab Restoration & Scroll to specific element
+        function restoreActiveTab() {
+            let rawHash = window.location.hash ? window.location.hash.substring(1) : null;
+            let savedTab = sessionStorage.getItem("activeDashboardTab");
+            let targetId = rawHash || savedTab || "overview-section";
+
+            let targetElement = document.getElementById(targetId);
+            let parentSection = null;
+
+            if (targetElement) {
+                if (targetElement.classList.contains("dashboard-section")) {
+                    parentSection = targetElement;
+                } else {
+                    parentSection = targetElement.closest(".dashboard-section");
+                }
+            }
+
+            if (!parentSection) {
+                parentSection = document.getElementById(savedTab) || document.getElementById("overview-section");
+            }
+
+            if (parentSection) {
+                const sectionId = parentSection.id;
+                sessionStorage.setItem("activeDashboardTab", sectionId);
+
+                const menuLinks = document.querySelectorAll(".sidebar-menu-link[data-section]");
+                menuLinks.forEach(l => {
+                    if (l.getAttribute("data-section") === sectionId) {
+                        l.classList.add("active");
+                        const labelSpan = l.querySelector("span");
+                        const pageNavTitle = document.getElementById("page-nav-title");
+                        if (labelSpan && pageNavTitle) {
+                            pageNavTitle.textContent = labelSpan.textContent;
+                        }
+                    } else {
+                        l.classList.remove("active");
+                    }
+                });
+
+                const sections = document.querySelectorAll(".dashboard-section");
+                sections.forEach(s => s.classList.remove("active-section"));
+                parentSection.classList.add("active-section");
+
+                setTimeout(() => {
+                    for (let key in charts) {
+                        if (charts[key]) charts[key].resize();
+                    }
+                }, 50);
+
+                if (targetElement && !targetElement.classList.contains("dashboard-section")) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                        targetElement.style.transition = "outline 0.3s ease, box-shadow 0.3s ease";
+                        targetElement.style.outline = "2px solid #D4E668";
+                        targetElement.style.outlineOffset = "4px";
+                        targetElement.style.boxShadow = "0 0 15px rgba(212, 230, 104, 0.4)";
+                        setTimeout(() => {
+                            targetElement.style.outline = "";
+                            targetElement.style.outlineOffset = "";
+                            targetElement.style.boxShadow = "";
+                        }, 2500);
+                    }, 150);
+                }
+            }
+        }
+
+        // 5. Initialize All Chart.js Visualizations
+        function initCharts() {
+            Chart.defaults.color = '#8A99A4';
+            Chart.defaults.font.family = "'Poppins', sans-serif";
+            Chart.defaults.plugins.legend.labels.color = '#FFFFFF';
+
+            // Chart 1: Solar vs Load
+            const ctxTopology = document.getElementById("chart-topology-load");
+            if (ctxTopology) {
+                charts.topology = new Chart(ctxTopology, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+                        datasets: [
+                            {
+                                label: 'Rooftop Solar Yield (kW)',
+                                data: [0, 0, 1.2, 7.8, 14.2, 11.5, 3.4, 0],
+                                borderColor: '#D4E668',
+                                backgroundColor: 'rgba(212, 230, 104, 0.12)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Estate Power Load (kW)',
+                                data: [2.4, 1.8, 3.1, 5.4, 6.2, 5.8, 7.4, 4.2],
+                                borderColor: '#38BDF8',
+                                backgroundColor: 'transparent',
+                                borderDash: [4, 4],
+                                tension: 0.4,
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + ' kW' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 2: Protocol Mesh
+            const ctxProtocols = document.getElementById("chart-protocols-pie");
+            if (ctxProtocols) {
+                charts.protocols = new Chart(ctxProtocols, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Matter / Thread (58)', 'KNX TP (42)', 'DALI-2 (24)', 'Zigbee 3.0 (14)', 'Local IP (10)'],
+                        datasets: [{
+                            data: [58, 42, 24, 14, 10],
+                            backgroundColor: ['#D4E668', '#38BDF8', '#10B981', '#E3B645', '#A855F7'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 3: Living Zones Microclimates
+            const ctxZones = document.getElementById("chart-zone-climates");
+            if (ctxZones) {
+                charts.zones = new Chart(ctxZones, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Master Suite', 'Great Room', 'Cinema', 'Culinary Suite', 'Executive Office', 'Pool Pavilion'],
+                        datasets: [
+                            {
+                                label: 'Target Temp (°F)',
+                                data: [68.5, 71.0, 71.5, 72.0, 70.0, 84.0],
+                                backgroundColor: '#38BDF8',
+                                borderRadius: 6
+                            },
+                            {
+                                label: 'Current Temp (°F)',
+                                data: [68.6, 70.9, 71.4, 72.1, 70.0, 83.8],
+                                backgroundColor: '#D4E668',
+                                borderRadius: 6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { 
+                                min: 50,
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + '°F' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 4: AQI Donut
+            const ctxAqi = document.getElementById("chart-aqi-radar");
+            if (ctxAqi) {
+                charts.aqi = new Chart(ctxAqi, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['PM2.5 (Pure)', 'CO2 (420ppm)', 'VOCs (None)', 'Humidity (45%)'],
+                        datasets: [{
+                            data: [40, 30, 15, 15],
+                            backgroundColor: ['#10B981', '#38BDF8', '#D4E668', '#A855F7'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // Chart 5: Circadian Curve
+            const ctxCirc = document.getElementById("chart-circadian-curve");
+            if (ctxCirc) {
+                charts.circadian = new Chart(ctxCirc, {
+                    type: 'line',
+                    data: {
+                        labels: ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'],
+                        datasets: [
+                            {
+                                label: 'Color Temp (Kelvin)',
+                                data: [2200, 3000, 4500, 5600, 5200, 4000, 2700, 2400, 2200, 2000],
+                                borderColor: '#D4E668',
+                                backgroundColor: 'rgba(212, 230, 104, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Target Lux Level',
+                                data: [150, 400, 650, 800, 750, 500, 300, 180, 80, 20],
+                                borderColor: '#E3B645',
+                                borderDash: [4, 4],
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 6: DALI-2 Driver Loads
+            const ctxDali = document.getElementById("chart-dali-loads");
+            if (ctxDali) {
+                charts.dali = new Chart(ctxDali, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Loop 01 (Gallery)', 'Loop 02 (Master)', 'Loop 03 (Cinema)', 'Loop 04 (Exterior)'],
+                        datasets: [{
+                            label: 'Channel Load (Watts)',
+                            data: [340, 180, 210, 420],
+                            backgroundColor: ['#D4E668', '#38BDF8', '#A855F7', '#10B981'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + 'W' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 7: Security Events
+            const ctxSecurity = document.getElementById("chart-security-events");
+            if (ctxSecurity) {
+                charts.security = new Chart(ctxSecurity, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                        datasets: [{
+                            label: 'Authorized Access Events',
+                            data: [2, 1, 14, 18, 22, 12, 4],
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 8: Security Sensors Donut
+            const ctxSecSensors = document.getElementById("chart-security-sensors");
+            if (ctxSecSensors) {
+                charts.secSensors = new Chart(ctxSecSensors, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Biometric Locks (16)', 'Optical AI Tripwires (8)', 'Glass Break (12)', 'UWB Readers (4)'],
+                        datasets: [{
+                            data: [16, 8, 12, 4],
+                            backgroundColor: ['#38BDF8', '#D4E668', '#A855F7', '#10B981'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // Chart 9: Energy Flow & BESS
+            const ctxEnergy = document.getElementById("chart-energy-flow");
+            if (ctxEnergy) {
+                charts.energy = new Chart(ctxEnergy, {
+                    type: 'line',
+                    data: {
+                        labels: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
+                        datasets: [
+                            {
+                                label: 'Solar Array Generation (kW)',
+                                data: [1.2, 7.8, 14.2, 11.5, 3.4, 0, 0],
+                                borderColor: '#D4E668',
+                                backgroundColor: 'rgba(212, 230, 104, 0.15)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Household Consumption (kW)',
+                                data: [2.1, 4.2, 5.1, 4.8, 6.2, 4.5, 2.8],
+                                borderColor: '#38BDF8',
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 10: Battery SoC
+            const ctxBattery = document.getElementById("chart-battery-soc");
+            if (ctxBattery) {
+                charts.battery = new Chart(ctxBattery, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['State of Charge (94%)', 'Reserve Margin (6%)'],
+                        datasets: [{
+                            data: [94, 6],
+                            backgroundColor: ['#10B981', 'rgba(255, 255, 255, 0.05)'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '75%',
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // Chart 11: Thread RSSI
+            const ctxThread = document.getElementById("chart-thread-rssi");
+            if (ctxThread) {
+                charts.thread = new Chart(ctxThread, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Router 01 (Core)', 'Router 02 (West)', 'Router 03 (East)', 'Router 04 (Upper)', 'Router 05 (Garden)'],
+                        datasets: [{
+                            label: 'Signal Quality (RSSI -dBm)',
+                            data: [-38, -44, -48, -42, -52],
+                            backgroundColor: '#38BDF8',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + ' dBm' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 12: Device Clusters
+            const ctxClusters = document.getElementById("chart-device-clusters");
+            if (ctxClusters) {
+                charts.clusters = new Chart(ctxClusters, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Lighting (48)', 'Sensors & mmWave (36)', 'HVAC Nodes (18)', 'Shades (22)', 'Smart Locks (16)', 'Energy (8)'],
+                        datasets: [{
+                            data: [48, 36, 18, 22, 16, 8],
+                            backgroundColor: ['#D4E668', '#38BDF8', '#10B981', '#A855F7', '#E3B645', '#EF4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '68%',
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+                    }
+                });
+            }
+
+            // Chart 13: KNX Traffic
+            const ctxKnx = document.getElementById("chart-knx-traffic");
+            if (ctxKnx) {
+                charts.knx = new Chart(ctxKnx, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                        datasets: [{
+                            label: 'Bus Telegrams / sec',
+                            data: [4, 3, 28, 42, 38, 32, 8],
+                            borderColor: '#38BDF8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 14: KNX Groups
+            const ctxKnxGroups = document.getElementById("chart-knx-groups");
+            if (ctxKnxGroups) {
+                charts.knxGroups = new Chart(ctxKnxGroups, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Actuators (40%)', 'Keypads (30%)', 'Sensors (20%)', 'Couplers (10%)'],
+                        datasets: [{
+                            data: [40, 30, 20, 10],
+                            backgroundColor: ['#10B981', '#38BDF8', '#D4E668', '#A855F7'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // Chart 15: Scene Latency
+            const ctxSceneLat = document.getElementById("chart-scene-latency");
+            if (ctxSceneLat) {
+                charts.sceneLat = new Chart(ctxSceneLat, {
+                    type: 'bar',
+                    data: {
+                        labels: ['OpenThread Hop', 'KNX TP Bus', 'DALI-2 Dimmer', 'Zero-Trust Engine', 'Total Whole-Home SLA'],
+                        datasets: [{
+                            label: 'Execution Latency (ms)',
+                            data: [4.2, 2.1, 3.4, 4.5, 14.2],
+                            backgroundColor: ['#38BDF8', '#A855F7', '#10B981', '#E3B645', '#D4E668'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { 
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { callback: v => v + ' ms' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 16: Trigger Freq
+            const ctxTrigFreq = document.getElementById("chart-trigger-freq");
+            if (ctxTrigFreq) {
+                charts.trigFreq = new Chart(ctxTrigFreq, {
+                    type: 'line',
+                    data: {
+                        labels: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
+                        datasets: [{
+                            label: 'Automations Fired',
+                            data: [45, 180, 240, 195, 340, 210, 80],
+                            borderColor: '#D4E668',
+                            backgroundColor: 'rgba(212, 230, 104, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

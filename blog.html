@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Tech Insights | Stackly Smart Home Living Solutions</title>
+    <meta name="description"
+        content="Read the latest insights on smart home engineering, local-first IoT architecture, Matter protocols, human-centric lighting, and energy automation.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+</head>
+
+<body class="blog-page">
+
+    <!-- Header / Navbar -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                    </a>
+                </div>
+
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="nav-login-mobile"><a href="login.html" class="btn-login-mobile">Login <i class="fas fa-user"></i></a></li>
+                </ul>
+
+                <a href="login.html" class="btn btn-primary btn-add-listing">Login <i class="fas fa-user"></i></a>
+
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+        <div class="menu-overlay" id="menu-overlay"></div>
+    </header>
+
+    <!-- ==============================================
+         HERO SECTION: Blog & Insights Banner
+         ============================================== -->
+    <section class="blog-hero">
+        <div class="blog-hero-bg" style="background-image: url('img/dan-lefebvre-RFAHj4tI37Y-unsplash.webp');"></div>
+        <div class="hero-glow-orb-blog"></div>
+
+        <div class="container">
+            <div class="blog-hero-content">
+                <div class="breadcrumb-nav">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <span>/</span>
+                    <span>Tech Insights & Blog</span>
+                </div>
+
+                <h1>
+                    Smart Living Insights & <br>
+                    <span class="gradient-text">The Future Of Home IoT</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Explore authoritative architectural engineering guides, protocol analysis, zero-trust cybersecurity frameworks, and sustainable energy blueprints curated by our senior automation architects.
+                </p>
+
+                <!-- Blog Stats Grid -->
+                <div class="blog-stats-grid">
+                    <div class="blog-stat-card">
+                        <h3 class="counter" data-target="50" data-suffix="+">0</h3>
+                        <p>In-Depth Blueprints</p>
+                    </div>
+                    <div class="blog-stat-card">
+                        <h3 class="counter" data-target="25" data-suffix="K+">0</h3>
+                        <p>Monthly Readers</p>
+                    </div>
+                    <div class="blog-stat-card">
+                        <h3 class="counter" data-target="100" data-suffix="%">0</h3>
+                        <p>Zero-Cloud Bias</p>
+                    </div>
+                    <div class="blog-stat-card">
+                        <h3 class="counter" data-target="12" data-suffix="+">0</h3>
+                        <p>Industry Awards</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         1. FEATURED SPOTLIGHT ARTICLE
+         ============================================== -->
+    <section class="featured-post-section">
+        <div class="container">
+            <div class="featured-post-card">
+                <div class="featured-post-img">
+                    <img src="img/dan-lefebvre-RFAHj4tI37Y-unsplash.webp" alt="Featured Smart Home Article">
+                    <span class="featured-badge">Featured Analysis</span>
+                </div>
+                <div class="featured-post-content">
+                    <div class="post-meta">
+                        <span><i class="fas fa-microchip"></i> Edge Architecture</span>
+                        <span><i class="far fa-clock"></i> 8 Min Read</span>
+                        <span><i class="far fa-calendar-alt"></i> October 2026</span>
+                    </div>
+                    <h2>The 2026 Shift: Why Local-First AI Edge Computing is Replacing Cloud-Only Smart Homes</h2>
+                    <p>
+                        Discover why discerning architects and luxury homeowners are abandoning latency-ridden cloud automation in favor of on-premise neural edge hubs that execute scenes with sub-20ms speed and total data sovereignty.
+                    </p>
+                    <div class="author-row">
+                        <div class="author-info">
+                            <img src="images/team-1.webp" alt="Dr. Sara Prova" class="author-avatar">
+                            <div>
+                                <div class="author-name">Dr. Sara Prova</div>
+                                <div class="author-role">Chief IoT Architect</div>
+                            </div>
+                        </div>
+                        <a href="404.html" class="btn btn-primary">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         2. CATEGORY FILTER & LATEST ARTICLES GRID
+         ============================================== -->
+    <section class="blog-feed-section">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-header-badge">✦ KNOWLEDGE BASE</span>
+                <h2>Latest Architectural Insights</h2>
+                <p>Browse our curated library of deep-dive articles spanning lighting, cybersecurity, microgrids, and universal protocols.</p>
+            </div>
+
+            <!-- Filter Pills -->
+            <div class="category-filter-bar">
+                <button class="filter-btn active" data-filter="all">All Topics</button>
+                <button class="filter-btn" data-filter="lighting">Architecture & Lighting</button>
+                <button class="filter-btn" data-filter="security">Security & Privacy</button>
+                <button class="filter-btn" data-filter="energy">Energy & Solar</button>
+                <button class="filter-btn" data-filter="matter">Matter & Protocols</button>
+                <button class="filter-btn" data-filter="audio">Acoustics & Audio</button>
+            </div>
+
+            <!-- Articles 3-Column Grid -->
+            <div class="articles-grid">
+                <!-- Article 1: Architecture & Lighting -->
+                <div class="blog-card" data-category="lighting">
+                    <div class="blog-card-img">
+                        <img src="img/jakub-zerdzicki-We56jns_zLE-unsplash.webp" alt="Circadian Lighting Guide">
+                        <span class="blog-card-tag">Lighting & Wellness</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span><i class="far fa-calendar-alt"></i> Sep 24, 2026</span>
+                            <span>•</span>
+                            <span><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3>Designing Human-Centric Circadian Illumination</h3>
+                        <p>How dynamic DALI-2 color temperature curves modulate melatonin production and enhance sleep quality across modern luxury residences.</p>
+                        <div class="blog-card-footer">
+                            <div class="author-sm">
+                                <img src="images/team-2.webp" alt="Janny Mari">
+                                <span>Janny Mari</span>
+                            </div>
+                            <a href="404.html" class="read-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 2: Security & Privacy -->
+                <div class="blog-card" data-category="security">
+                    <div class="blog-card-img">
+                        <img src="img/sebastian-scholz-nuki-IJkSskfEqrM-unsplash.webp" alt="Zero-Trust Biometrics">
+                        <span class="blog-card-tag">Cyber Defense</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span><i class="far fa-calendar-alt"></i> Sep 18, 2026</span>
+                            <span>•</span>
+                            <span><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3>Beyond Passwords: Zero-Trust Biometric Vaults</h3>
+                        <p>An architectural blueprint for hardware AES-256 encrypted access control, on-premise NVR surveillance, and radar perimeter tripwires.</p>
+                        <div class="blog-card-footer">
+                            <div class="author-sm">
+                                <img src="images/team-3.webp" alt="Michel Smith">
+                                <span>Michel Smith</span>
+                            </div>
+                            <a href="404.html" class="read-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 3: Spatial AI / Architecture & Lighting -->
+                <div class="blog-card" data-category="lighting">
+                    <div class="blog-card-img">
+                        <img src="img/vitaly-gariev-TTcTl02R9Ts-unsplash.webp" alt="Predictive AI Living">
+                        <span class="blog-card-tag">Spatial AI</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span><i class="far fa-calendar-alt"></i> Sep 12, 2026</span>
+                            <span>•</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3>Spatial Machine Learning: How Homes Anticipate Needs</h3>
+                        <p>Moving past manual voice commands: how multi-sensor fusion adjusts HVAC dampers and ambient lighting before you enter the room.</p>
+                        <div class="blog-card-footer">
+                            <div class="author-sm">
+                                <img src="images/team-1.webp" alt="Dr. Sara Prova">
+                                <span>Dr. Sara Prova</span>
+                            </div>
+                            <a href="404.html" class="read-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 4: Energy & Solar -->
+                <div class="blog-card" data-category="energy">
+                    <div class="blog-card-img">
+                        <img src="img/dcbel-4Mue3wkpoIw-unsplash.webp" alt="Smart Solar and EV Balancing">
+                        <span class="blog-card-tag">Energy & Solar</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span><i class="far fa-calendar-alt"></i> Sep 05, 2026</span>
+                            <span>•</span>
+                            <span><i class="far fa-clock"></i> 9 min read</span>
+                        </div>
+                        <h3>Balancing Solar Inverters, Home Batteries & EV Charging</h3>
+                        <p>How dynamic peak-shaving algorithms prevent grid surcharge penalties while enabling off-grid islanding during severe power outages.</p>
+                        <div class="blog-card-footer">
+                            <div class="author-sm">
+                                <img src="images/testimonial-2.webp" alt="David Sterling">
+                                <span>David Sterling</span>
+                            </div>
+                            <a href="404.html" class="read-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 5: Matter & Protocols -->
+                <div class="blog-card" data-category="matter">
+                    <div class="blog-card-img">
+                        <img src="img/jonas-leupe-dZmNJKFDuVI-unsplash.webp" alt="Matter 1.3 Standards">
+                        <span class="blog-card-tag">Protocols & Matter</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span><i class="far fa-calendar-alt"></i> Aug 28, 2026</span>
+                            <span>•</span>
+                            <span><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3>Matter 1.3 & Thread: Unifying Apple, Google & KNX</h3>
+                        <p>Eliminating proprietary walled gardens: practical strategies for integrating high-end wired KNX buses with consumer wireless Thread nodes.</p>
+                        <div class="blog-card-footer">
+                            <div class="author-sm">
+                                <img src="images/team-2.webp" alt="Janny Mari">
+                                <span>Janny Mari</span>
+                            </div>
+                            <a href="404.html" class="read-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 6: Acoustics & Audio -->
+                <div class="blog-card" data-category="audio">
+                    <div class="blog-card-img">
+                        <img src="img/jason-leung-wnIXvXBFnsg-unsplash.webp" alt="Invisible Architectural Audio">
+                        <span class="blog-card-tag">Acoustics & Cinema</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-card-meta">
+                            <span><i class="far fa-calendar-alt"></i> Aug 20, 2026</span>
+                            <span>•</span>
+                            <span><i class="far fa-clock"></i> 8 min read</span>
+                        </div>
+                        <h3>Invisible Architectural Audio & Dolby Atmos 9.4.4</h3>
+                        <p>Engineering audiophile-grade whole-home sound with zero visual footprint using in-wall planar transducers and discrete sub-floor subwoofers.</p>
+                        <div class="blog-card-footer">
+                            <div class="author-sm">
+                                <img src="images/team-3.webp" alt="Michel Smith">
+                                <span>Michel Smith</span>
+                            </div>
+                            <a href="404.html" class="read-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         3. PODCAST & AUDIO DEEP DIVES
+         ============================================== -->
+    <section class="podcast-section" id="blog-podcasts">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-header-badge">✦ THE SMART HABITAT PODCAST</span>
+                <h2>Listen To Our Engineering Debates</h2>
+                <p>Bi-weekly conversations with principal system architects, lighting designers, and cybersecurity researchers.</p>
+            </div>
+
+            <div class="podcast-grid">
+                <!-- Episode 1 -->
+                <div class="podcast-card">
+                    <a href="404.html?from=blog.html&section=blog-podcasts" class="podcast-play-btn" style="text-decoration: none;">
+                        <i class="fas fa-play"></i>
+                    </a>
+                    <div class="podcast-details">
+                        <h4>Episode 42: The Death of Cloud Lag with Matter over Thread</h4>
+                        <p>A technical breakdown of why multi-admin mesh networks finally eliminate wireless dropouts in sprawling residences.</p>
+                        <div class="podcast-meta-tags">
+                            <span><i class="fas fa-headphones"></i> 38 Mins</span>
+                            <span>•</span>
+                            <span><i class="fas fa-user-tie"></i> Host: Dr. Sara Prova</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Episode 2 -->
+                <div class="podcast-card">
+                    <a href="404.html?from=blog.html&section=blog-podcasts" class="podcast-play-btn" style="text-decoration: none;">
+                        <i class="fas fa-play"></i>
+                    </a>
+                    <div class="podcast-details">
+                        <h4>Episode 43: Engineering Net-Zero Luxury Compounds</h4>
+                        <p>How microgrid controllers orchestrate solar production, HVAC pre-conditioning, and bidirectional EV fast charging.</p>
+                        <div class="podcast-meta-tags">
+                            <span><i class="fas fa-headphones"></i> 44 Mins</span>
+                            <span>•</span>
+                            <span><i class="fas fa-user-tie"></i> Host: David Sterling</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         4. TECHNICAL WHITEPAPERS & BLUEPRINTS
+         ============================================== -->
+    <section class="whitepapers-section">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-header-badge">✦ ARCHITECTURAL RESOURCES</span>
+                <h2>Download Engineering Whitepapers</h2>
+                <p>Complimentary reference documentation, low-voltage wiring schematics, and cybersecurity audit checklists.</p>
+            </div>
+
+            <div class="whitepapers-grid">
+                <!-- Paper 1 -->
+                <div class="whitepaper-card">
+                    <i class="fas fa-file-invoice-dollar whitepaper-icon"></i>
+                    <h3>2026 Residential Low-Voltage CAD Schematics</h3>
+                    <p>Comprehensive standard operating procedures for DIN-rail panels, Cat6A backbones, and rack ventilation standards.</p>
+                    <a href="404.html" class="whitepaper-download-btn"><i class="fas fa-download"></i> Download PDF (4.2 MB)</a>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="whitepaper-card">
+                    <i class="fas fa-shield-virus whitepaper-icon"></i>
+                    <h3>Residential Cyber Defense & Encryption Audit</h3>
+                    <p>A 28-point security framework for securing local IoT networks, isolated VLANs, and biometric door controllers.</p>
+                    <a href="404.html" class="whitepaper-download-btn"><i class="fas fa-download"></i> Download PDF (3.1 MB)</a>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="whitepaper-card">
+                    <i class="fas fa-leaf whitepaper-icon"></i>
+                    <h3>Net-Zero Energy Orchestration Guide</h3>
+                    <p>Detailed math models for solar array sizing, battery storage optimization, and thermal setback automation.</p>
+                    <a href="404.html" class="whitepaper-download-btn"><i class="fas fa-download"></i> Download PDF (5.6 MB)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         5. INDUSTRY PROTOCOL WATCH (News Feed)
+         ============================================== -->
+    <section class="news-feed-section">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-header-badge">✦ REAL-TIME DISPATCHES</span>
+                <h2>IoT Protocol & Standards Watch</h2>
+                <p>Stay informed on the latest firmware revisions, security patches, and regulatory shifts in the connected home sector.</p>
+            </div>
+
+            <div class="news-timeline">
+                <!-- News 1 -->
+                <div class="news-card">
+                    <div class="news-card-info">
+                        <span class="news-protocol-badge">CSA Specification</span>
+                        <h4>Matter 1.3 Certified for Smart Home EV Chargers & Water Heaters</h4>
+                        <p>The Connectivity Standards Alliance introduces energy management device categories with bidirectional telemetry.</p>
+                    </div>
+                    <div class="news-date">Sep 28, 2026</div>
+                </div>
+
+                <!-- News 2 -->
+                <div class="news-card">
+                    <div class="news-card-info">
+                        <span class="news-protocol-badge">Thread Group</span>
+                        <h4>Thread 1.4 Rolling Out: Seamless Border Router Provisioning</h4>
+                        <p>Eliminating credentials sync hurdles across cross-brand smart speakers and smart displays.</p>
+                    </div>
+                    <div class="news-date">Sep 22, 2026</div>
+                </div>
+
+                <!-- News 3 -->
+                <div class="news-card">
+                    <div class="news-card-info">
+                        <span class="news-protocol-badge">CEDIA Standards</span>
+                        <h4>CEDIA Releases High-Resolution In-Wall Audio Calibration Benchmark</h4>
+                        <p>New acoustic testing methodologies for invisible architectural transducers inside drywall.</p>
+                    </div>
+                    <div class="news-date">Sep 15, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         6. INFINITE TECH ECOSYSTEM MARQUEE
+         ============================================== -->
+    <section class="ecosystem-marquee-section">
+        <div class="ecosystem-track">
+            <div class="partner-chip"><i class="fab fa-apple"></i> Apple HomeKit</div>
+            <div class="partner-chip"><i class="fab fa-google"></i> Google Home</div>
+            <div class="partner-chip"><i class="fab fa-amazon"></i> Amazon Alexa</div>
+            <div class="partner-chip"><i class="fas fa-certificate"></i> Matter Standard</div>
+            <div class="partner-chip"><i class="fas fa-project-diagram"></i> Zigbee 3.0</div>
+            <div class="partner-chip"><i class="fas fa-wave-square"></i> Z-Wave Plus</div>
+            <div class="partner-chip"><i class="fas fa-network-wired"></i> KNX Protocol</div>
+            <div class="partner-chip"><i class="fas fa-sliders-h"></i> Control4</div>
+            <div class="partner-chip"><i class="fas fa-lightbulb"></i> Lutron Electronics</div>
+            <div class="partner-chip"><i class="fas fa-volume-up"></i> Sonos Architectural</div>
+
+            <!-- Loop Duplicates -->
+            <div class="partner-chip"><i class="fab fa-apple"></i> Apple HomeKit</div>
+            <div class="partner-chip"><i class="fab fa-google"></i> Google Home</div>
+            <div class="partner-chip"><i class="fab fa-amazon"></i> Amazon Alexa</div>
+            <div class="partner-chip"><i class="fas fa-certificate"></i> Matter Standard</div>
+            <div class="partner-chip"><i class="fas fa-project-diagram"></i> Zigbee 3.0</div>
+            <div class="partner-chip"><i class="fas fa-wave-square"></i> Z-Wave Plus</div>
+            <div class="partner-chip"><i class="fas fa-network-wired"></i> KNX Protocol</div>
+            <div class="partner-chip"><i class="fas fa-sliders-h"></i> Control4</div>
+            <div class="partner-chip"><i class="fas fa-lightbulb"></i> Lutron Electronics</div>
+            <div class="partner-chip"><i class="fas fa-volume-up"></i> Sonos Architectural</div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         7. VIP NEWSLETTER SUBSCRIPTION BOX
+         ============================================== -->
+    <section class="blog-newsletter-section" id="blog-newsletter">
+        <div class="container">
+            <div class="blog-newsletter-box">
+                <span class="section-header-badge">✦ THE SUNDAY BLUEPRINT</span>
+                <h2>Join 25,000+ Smart Home Innovators</h2>
+                <p>Receive our weekly Sunday morning briefing: curated architectural IoT schematics, hardware teardowns, and zero-trust security insights directly in your inbox.</p>
+                <form class="blog-subscribe-form" action="404.html?from=blog.html&section=blog-newsletter">
+                    <input type="email" placeholder="Enter your work or personal email..." required>
+                    <button type="submit" class="btn btn-primary">Subscribe Free <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         8. BLOG CTA BANNER
+         ============================================== -->
+    <section class="blog-cta-section" id="blog-cta">
+        <div class="container">
+            <div class="blog-cta-box">
+                <h2>Have A Specific Architectural Project in Mind?</h2>
+                <p>Our principal IoT engineers collaborate directly with homeowners, architects, and general contractors from rough-in to final commissioning.</p>
+                <div class="blog-cta-buttons">
+                    <a href="404.html?from=blog.html&section=blog-cta" class="btn btn-primary">Explore Turnkey Services <i class="fas fa-arrow-right"></i></a>
+                    <a href="404.html?from=blog.html&section=blog-cta" class="btn btn-orange">Our Engineering Story</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         FOOTER
+         ============================================== -->
+        <!-- Footer -->
+    <footer class="footer" id="blog-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <a href="index.html">
+                            <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                        </a>
+                    </div>
+                    <div class="social-icons">
+                        <a href="404.html?from=blog.html&section=blog-footer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="404.html?from=blog.html&section=blog-footer"><i class="fab fa-twitter"></i></a>
+                        <a href="404.html?from=blog.html&section=blog-footer"><i class="fab fa-instagram"></i></a>
+                        <a href="404.html?from=blog.html&section=blog-footer"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Get In Touch</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> MMR Complex, China Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+                    <p><i class="fas fa-envelope"></i> support@stacklysmart.com</p>
+                    <p><i class="fas fa-phone"></i> +1 386-688-3295</p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Smart Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="404.html?from=blog.html&section=blog-footer">Smart Lighting</a></li>
+                        <li><a href="404.html?from=blog.html&section=blog-footer">Home Security</a></li>
+                        <li><a href="404.html?from=blog.html&section=blog-footer">Climate Automation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Service</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Subscribe to Smart Home Insights</h3>
+                    <form class="newsletter-form" action="404.html?from=blog.html&section=blog-footer">
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright &copy; 2024 Stackly Smart Home Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Scripts -->
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Main Scripts -->
+    <script src="js/script.js"></script>
+
+    <!-- Custom Interactive Scripts for Blog Page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+
+            // Category Filter Interactivity
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const blogCards = document.querySelectorAll('.articles-grid .blog-card');
+
+            filterBtns.forEach(btn => {
+                const handleFilter = (e) => {
+                    e.preventDefault();
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    blogCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+                        if (filterValue === 'all' || cardCategory === filterValue) {
+                            card.classList.remove('is-hidden');
+                            card.style.display = '';
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(12px)';
+                            setTimeout(() => {
+                                card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 30);
+                        } else {
+                            card.classList.add('is-hidden');
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.refresh();
+                    }
+                };
+
+                btn.addEventListener('click', handleFilter);
+            });
+
+            // Number Counter Animation for Blog Hero
+            const counters = document.querySelectorAll('.blog-stat-card .counter');
+            function runCounters() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const suffix = counter.getAttribute('data-suffix') || '+';
+                    let count = 0;
+                    const increment = Math.max(1, target / 35);
+
+                    const updateCount = () => {
+                        count += increment;
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count) + (suffix === '%' ? '%' : '');
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            counter.innerText = target + suffix;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            setTimeout(() => {
+                runCounters();
+            }, 350);
+
+            // GSAP Parallax & Floating Animation for Hero Glow
+            if (typeof gsap !== 'undefined') {
+                gsap.to('.hero-glow-orb-blog', {
+                    y: 40,
+                    x: -35,
+                    duration: 7,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut'
+                });
+
+                // Check if ScrollTrigger is available
+                if (typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    // Hero Content Smooth Fade In
+                    gsap.from('.blog-hero-content', {
+                        opacity: 0,
+                        duration: 0.9,
+                        ease: 'power2.out'
+                    });
+
+                    // 1. Featured Post Card Reveal
+                    const featuredCard = document.querySelector('.featured-post-card');
+                    if (featuredCard) {
+                        gsap.from(featuredCard, {
+                            scrollTrigger: {
+                                trigger: featuredCard,
+                                start: 'top 88%',
+                                toggleActions: 'play none none none'
+                            },
+                            opacity: 0,
+                            scale: 0.97,
+                            duration: 0.8,
+                            ease: 'power1.out',
+                            clearProps: 'all'
+                        });
+                    }
+
+                    // 2. Blog Articles Grid Stagger Reveal (Zero Y Collision)
+                    ScrollTrigger.batch('.blog-card', {
+                        start: 'top 88%',
+                        onEnter: batch => gsap.from(batch, {
+                            opacity: 0,
+                            scale: 0.97,
+                            stagger: 0.1,
+                            duration: 0.6,
+                            ease: 'power1.out',
+                            clearProps: 'all'
+                        }),
+                        once: true
+                    });
+
+                    // 3. Podcast Cards Reveal
+                    ScrollTrigger.batch('.podcast-card', {
+                        start: 'top 88%',
+                        onEnter: batch => gsap.from(batch, {
+                            opacity: 0,
+                            scale: 0.96,
+                            stagger: 0.12,
+                            duration: 0.6,
+                            ease: 'power1.out',
+                            clearProps: 'all'
+                        }),
+                        once: true
+                    });
+
+                    // 4. Whitepaper Cards Reveal
+                    ScrollTrigger.batch('.whitepaper-card', {
+                        start: 'top 88%',
+                        onEnter: batch => gsap.from(batch, {
+                            opacity: 0,
+                            scale: 0.96,
+                            stagger: 0.12,
+                            duration: 0.6,
+                            ease: 'power1.out',
+                            clearProps: 'all'
+                        }),
+                        once: true
+                    });
+
+                    // 5. News Timeline Cards Reveal
+                    ScrollTrigger.batch('.news-card', {
+                        start: 'top 90%',
+                        onEnter: batch => gsap.from(batch, {
+                            opacity: 0,
+                            stagger: 0.1,
+                            duration: 0.5,
+                            ease: 'power1.out',
+                            clearProps: 'all'
+                        }),
+                        once: true
+                    });
+
+                    // 6. Blog Newsletter & CTA Box Reveal
+                    const blogCta = document.querySelector('.blog-cta-box, .newsletter-box');
+                    if (blogCta) {
+                        gsap.from(blogCta, {
+                            scrollTrigger: {
+                                trigger: blogCta,
+                                start: 'top 85%',
+                                toggleActions: 'play none none none'
+                            },
+                            opacity: 0,
+                            scale: 0.96,
+                            duration: 0.8,
+                            ease: 'power2.out',
+                            clearProps: 'all'
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Portal | Stackly Smart Living</title>
+    <meta name="description"
+        content="Access your Stackly Smart Living portal. Sign in or register to manage intelligent home automation, IoT sensors, climate control, and security access.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="login-page-body">
+
+    <!-- Header / Navbar -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                    </a>
+                </div>
+
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="nav-login-mobile"><a href="login.html" class="btn-login-mobile">Login <i class="fas fa-user"></i></a></li>
+                </ul>
+
+                <a href="login.html" class="btn btn-primary btn-add-listing">Login <i class="fas fa-user"></i></a>
+
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+        <div class="menu-overlay" id="menu-overlay"></div>
+    </header>
+
+
+
+    <!-- Main Auth Section -->
+    <main class="auth-main-section">
+        <div class="auth-ambient-glow-1"></div>
+        <div class="auth-ambient-glow-2"></div>
+
+        <div class="container">
+            <div class="auth-container-card">
+                
+                <!-- LEFT SIDE: VISUAL & SMART LIVING TELEMETRY -->
+                <div class="auth-visual-column">
+                    <div class="auth-visual-top">
+                        <div class="iot-status-badge">
+                            <span class="pulse-node"></span>
+                            <span>IoT Hub Operational</span>
+                        </div>
+                        <h1 class="auth-visual-title">Seamless Control Over Your Smart Living.</h1>
+                        <p class="auth-visual-subtitle">Access your connected nodes, real-time climate management, high-frequency security logs, and AI scene automation.</p>
+                    </div>
+
+                    <div class="auth-visual-bottom">
+                        <!-- Telemetry Stats -->
+                        <div class="telemetry-grid">
+                            <div class="telemetry-card">
+                                <span class="telemetry-value">99.9%</span>
+                                <span class="telemetry-label">Hub Uptime</span>
+                            </div>
+                            <div class="telemetry-card">
+                                <span class="telemetry-value">256-Bit</span>
+                                <span class="telemetry-label">AES Security</span>
+                            </div>
+                            <div class="telemetry-card">
+                                <span class="telemetry-value">&lt; 12ms</span>
+                                <span class="telemetry-label">IoT Latency</span>
+                            </div>
+                        </div>
+
+                        <!-- Feature Checklist -->
+                        <ul class="auth-feature-list">
+                            <li><i class="fas fa-check-circle"></i> Multi-zone smart lighting & HVAC synchronization</li>
+                            <li><i class="fas fa-check-circle"></i> Biometric entry protocols & instant alerts</li>
+                            <li><i class="fas fa-check-circle"></i> Cloud telemetry backup with continuous sync</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: FORM & CONTROLS -->
+                <div class="auth-form-column">
+                    
+                    <!-- Segmented Tab Switcher -->
+                    <div class="auth-tab-switcher">
+                        <button type="button" class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                        <button type="button" class="auth-tab-btn" id="tabSignupBtn" onclick="switchAuthTab('signup')">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </div>
+
+                    <!-- ==============================================
+                         SIGN IN / LOGIN VIEW
+                         ============================================== -->
+                    <div class="auth-form-view active" id="loginView">
+                        <div class="auth-header-block">
+                            <h2>Welcome Back</h2>
+                            <p>Sign in to configure and control your smart home ecosystem.</p>
+                        </div>
+
+                        <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                            
+                            <!-- Role Selection -->
+                            <div class="role-picker-container">
+                                <span class="role-picker-label">Select Access Role</span>
+                                <div class="role-picker-grid">
+                                    <label class="role-card-label">
+                                        <input type="radio" name="loginRole" value="User" checked>
+                                        <div class="role-card-content">
+                                            <div class="role-card-icon">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="role-card-details">
+                                                <span class="role-card-title">User</span>
+                                                <span class="role-card-desc">Standard Access</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="role-card-label">
+                                        <input type="radio" name="loginRole" value="Admin">
+                                        <div class="role-card-content">
+                                            <div class="role-card-icon">
+                                                <i class="fas fa-user-shield"></i>
+                                            </div>
+                                            <div class="role-card-details">
+                                                <span class="role-card-title">Admin</span>
+                                                <span class="role-card-desc">Full IoT Control</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="input-control-group">
+                                <div class="input-label-container">
+                                    <label for="loginEmail">Email Address</label>
+                                </div>
+                                <div class="field-wrapper">
+                                    <input type="email" id="loginEmail" class="auth-form-input" placeholder="name@stacklysmart.com" required>
+                                    <i class="fas fa-envelope field-icon-left"></i>
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="input-control-group">
+                                <div class="input-label-container">
+                                    <label for="loginPassword">Password</label>
+                                    <a href="404.html" class="forgot-password-link">Forgot password?</a>
+                                </div>
+                                <div class="field-wrapper">
+                                    <input type="password" id="loginPassword" class="auth-form-input" placeholder="Enter your password" required>
+                                    <i class="fas fa-lock field-icon-left"></i>
+                                    <button type="button" class="password-toggle-trigger" onclick="togglePasswordVisibility('loginPassword', this)" title="Show or hide password">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="checkbox-inline-row">
+                                <label class="custom-chk-label">
+                                    <input type="checkbox" id="rememberMe" checked>
+                                    <span>Keep this device authenticated</span>
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn-auth-main">
+                                <span>Sign In to Dashboard</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </form>
+
+                        <!-- Social Logins -->
+                        <div class="social-separator">
+                            <span>or continue with</span>
+                        </div>
+
+                        <div class="social-auth-grid">
+                            <a href="404.html" class="social-auth-tile" title="Sign in with Google">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="404.html" class="social-auth-tile" title="Sign in with Apple">
+                                <i class="fab fa-apple"></i>
+                            </a>
+                            <a href="404.html" class="social-auth-tile" title="Sign in with GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="404.html" class="social-auth-tile" title="Sign in with Microsoft">
+                                <i class="fab fa-microsoft"></i>
+                            </a>
+                        </div>
+
+                        <div class="auth-bottom-switch-link">
+                            Don't have an account? <a href="javascript:void(0)" onclick="switchAuthTab('signup')">Create one now</a>
+                        </div>
+                    </div>
+
+                    <!-- ==============================================
+                         CREATE ACCOUNT / SIGNUP VIEW
+                         ============================================== -->
+                    <div class="auth-form-view" id="signupView">
+                        <div class="auth-header-block">
+                            <h2>Create Account</h2>
+                            <p>Register your smart devices and start customizing your hub.</p>
+                        </div>
+
+                        <form id="signupForm" onsubmit="handleSignupSubmit(event)">
+                            
+                            <!-- Role Selection -->
+                            <div class="role-picker-container">
+                                <span class="role-picker-label">Choose Account Privilege</span>
+                                <div class="role-picker-grid">
+                                    <label class="role-card-label">
+                                        <input type="radio" name="signupRole" value="User" checked>
+                                        <div class="role-card-content">
+                                            <div class="role-card-icon">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="role-card-details">
+                                                <span class="role-card-title">User</span>
+                                                <span class="role-card-desc">Standard Member</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="role-card-label">
+                                        <input type="radio" name="signupRole" value="Admin">
+                                        <div class="role-card-content">
+                                            <div class="role-card-icon">
+                                                <i class="fas fa-user-shield"></i>
+                                            </div>
+                                            <div class="role-card-details">
+                                                <span class="role-card-title">Admin</span>
+                                                <span class="role-card-desc">Full Hub Control</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="input-control-group">
+                                <div class="input-label-container">
+                                    <label for="signupName">Full Name</label>
+                                </div>
+                                <div class="field-wrapper">
+                                    <input type="text" id="signupName" class="auth-form-input" placeholder="Alexander Wright" required>
+                                    <i class="fas fa-user field-icon-left"></i>
+                                </div>
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="input-control-group">
+                                <div class="input-label-container">
+                                    <label for="signupEmail">Email Address</label>
+                                </div>
+                                <div class="field-wrapper">
+                                    <input type="email" id="signupEmail" class="auth-form-input" placeholder="name@stacklysmart.com" required>
+                                    <i class="fas fa-envelope field-icon-left"></i>
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="input-control-group">
+                                <div class="input-label-container">
+                                    <label for="signupPassword">Password</label>
+                                </div>
+                                <div class="field-wrapper">
+                                    <input type="password" id="signupPassword" class="auth-form-input" placeholder="Create a strong password" minlength="6" required>
+                                    <i class="fas fa-lock field-icon-left"></i>
+                                    <button type="button" class="password-toggle-trigger" onclick="togglePasswordVisibility('signupPassword', this)" title="Show or hide password">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="checkbox-inline-row">
+                                <label class="custom-chk-label">
+                                    <input type="checkbox" id="agreeTerms" required>
+                                    <span>I accept the <a href="404.html">Terms of Service</a> & <a href="404.html">Privacy Policy</a></span>
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn-auth-main">
+                                <span>Complete Registration</span>
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                        </form>
+
+                        <!-- Social Logins -->
+                        <div class="social-separator">
+                            <span>or register with</span>
+                        </div>
+
+                        <div class="social-auth-grid">
+                            <a href="404.html" class="social-auth-tile" title="Sign up with Google">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="404.html" class="social-auth-tile" title="Sign up with Apple">
+                                <i class="fab fa-apple"></i>
+                            </a>
+                            <a href="404.html" class="social-auth-tile" title="Sign up with GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="404.html" class="social-auth-tile" title="Sign up with Microsoft">
+                                <i class="fab fa-microsoft"></i>
+                            </a>
+                        </div>
+
+                        <div class="auth-bottom-switch-link">
+                            Already have an account? <a href="javascript:void(0)" onclick="switchAuthTab('login')">Sign In here</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+        <!-- Footer -->
+    <footer class="footer" id="login-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <a href="index.html">
+                            <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                        </a>
+                    </div>
+                    <div class="social-icons">
+                        <a href="404.html?from=login.html&section=login-footer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="404.html?from=login.html&section=login-footer"><i class="fab fa-twitter"></i></a>
+                        <a href="404.html?from=login.html&section=login-footer"><i class="fab fa-instagram"></i></a>
+                        <a href="404.html?from=login.html&section=login-footer"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Get In Touch</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> MMR Complex, China Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+                    <p><i class="fas fa-envelope"></i> support@stacklysmart.com</p>
+                    <p><i class="fas fa-phone"></i> +1 386-688-3295</p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Smart Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="404.html?from=login.html&section=login-footer">Smart Lighting</a></li>
+                        <li><a href="404.html?from=login.html&section=login-footer">Home Security</a></li>
+                        <li><a href="404.html?from=login.html&section=login-footer">Climate Automation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Service</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Subscribe to Smart Home Insights</h3>
+                    <form class="newsletter-form" action="404.html?from=login.html&section=login-footer">
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright &copy; 2024 Stackly Smart Home Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>
+
+
+

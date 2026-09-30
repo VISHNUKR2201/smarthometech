@@ -1,0 +1,1013 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Smart Living | Smart Home Technology & Automation</title>
+    <meta name="description"
+        content="Stackly Smart Living - Intelligent Home Automation & IoT Solutions. Elevate your lifestyle with next-generation smart home technology.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- FontAwesome for Icons (Optional, using CDN for now) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                    </a>
+                </div>
+
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="nav-login-mobile"><a href="login.html" class="btn-login-mobile">Login <i class="fas fa-user"></i></a></li>
+                </ul>
+
+                <a href="login.html" class="btn btn-primary btn-add-listing">Login <i
+                        class="fas fa-user"></i></a>
+
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+        <div class="menu-overlay" id="menu-overlay"></div>
+    </header>
+
+    <!-- Hero Slider Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <!-- Slide 1 -->
+            <div class="slide active">
+                <div class="slide-bg" style="background-image: url('img/jakub-zerdzicki-250Ma9N4rdM-unsplash.webp');">
+                </div>
+                <div class="container slide-content">
+                    <h1>Intelligent <br> Home Automation <br> Solutions</h1>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="slide-bg" style="background-image: url('images/hero-slide-2.webp');">
+                </div>
+                <div class="container slide-content">
+                    <h1>Next-Gen IoT <br> Seamless Control & <br> Smart Security</h1>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="slide-bg" style="background-image: url('images/hero-slide-3.webp');">
+                </div>
+                <div class="container slide-content">
+                    <h1>Future-Ready <br> Connected Living <br> Experience</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <!-- Static Content -->
+        <div class="container hero-static-content">
+
+            <div class="hero-buttons">
+                <a href="404.html" class="btn btn-primary">Explore Smart Systems <i class="fas fa-arrow-right"></i></a>
+                <a href="404.html" class="btn-video-play">
+                    <span class="play-icon"><i class="fas fa-play"></i></span>
+                    <span class="pulse"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Slider Controls -->
+        <div class="slider-controls">
+            <div class="control-line active" data-index="0"></div>
+            <div class="control-line" data-index="1"></div>
+            <div class="control-line" data-index="2"></div>
+        </div>
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="stats">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <h3 data-target="850">0</h3>
+                    <p>Smart Devices Installed</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="950">0</h3>
+                    <p>Automated Homes</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="18000">0</h3>
+                    <p>Connected Systems</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="2000">0</h3>
+                    <p>Satisfied Clients</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Services Section (Dark Theme) -->
+    <section class="section about-services" id="about">
+        <div class="watermark-text">ABOUT</div>
+        <div class="container">
+            <!-- Part A: Header -->
+            <div class="about-header">
+                <div class="about-intro">
+                    <h4>About Us</h4>
+                    <h2>We are smart home automation pioneers with over 20 years of expertise, dedicated
+                        to delivering
+                        seamless IoT ecosystems and intelligent living experiences.</h2>
+                </div>
+                <div class="about-btn">
+                    <a href="404.html" class="btn btn-primary">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Part B: Images & Badge -->
+            <div class="about-showcase">
+                <div class="about-image-grid">
+                    <div class="about-img-item">
+                        <img src="img/vitaly-gariev-5IDx9CG_mqM-unsplash.webp" alt="Smart Home Architecture" loading="lazy">
+                    </div>
+                    <div class="about-img-item">
+                        <img src="img/jason-leung-wnIXvXBFnsg-unsplash.webp" alt="Ambient IoT Smart Living" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- Rotating Agent Badge -->
+                <div class="agent-badge-wrapper">
+                    <div class="agent-badge">
+                        <div class="badge-text-circle">
+                            <svg viewBox="0 0 100 100" width="100%" height="100%">
+                                <defs>
+                                    <path id="circlePath"
+                                        d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+                                </defs>
+                                <text>
+                                    <textPath xlink:href="#circlePath">STACKLY SMART LIVING • AUTOMATION EXPERT •
+                                    </textPath>
+                                </text>
+                            </svg>
+                        </div>
+                        <div class="badge-img">
+                            <img src="images/agent-badge.webp" alt="Agent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part C: Who We Are Section -->
+            <div class="who-we-are-section">
+                <div class="who-we-are-container">
+                    <!-- Left Column -->
+                    <div class="who-content-left">
+                        <span class="sub-title">✦ WHO WE ARE</span>
+                        <h2>Pioneering Next-Generation Smart Home Automation & IoT Ecosystems</h2>
+
+                        <div class="experience-counter">
+                            <div class="exp-number">15<sup class="plus">+</sup></div>
+                            <div class="exp-text">Years Of Innovation</div>
+                            <!-- Swirly decoration -->
+                            <svg class="swirly-arrow" width="80" height="80" viewBox="0 0 100 100">
+                                <path d="M10,80 Q30,10 60,30 T90,50" fill="none" stroke="#ccc" stroke-width="2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Middle Column - Small Image -->
+                    <div class="who-img-small">
+                        <img src="img/dan-lefebvre-RFAHj4tI37Y-unsplash.webp" alt="Smart Touch Control Panel" loading="lazy">
+                    </div>
+
+                    <!-- Right Column - Large Image & Text -->
+                    <div class="who-content-right">
+                        <div class="who-img-large">
+                            <img src="img/christian-agbede-73flUsvIWnQ-unsplash.webp" alt="Automated Smart Residence" loading="lazy">
+                        </div>
+                        <p class="who-desc">Experience the pinnacle of modern convenience with Stackly. Our intelligent
+                            automation systems seamlessly unify lighting, climate, security, and entertainment into one
+                            effortless touch-and-voice controlled ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SMART HOME ECOSYSTEM Section -->
+    <section class="section luxury-section" id="projects">
+        <div class="container luxury-container">
+            <!-- Left Column: Images -->
+            <div class="luxury-images">
+                <div class="luxury-img-wrapper">
+                    <div class="img-card top-img">
+                        <img src="img/vitaly-gariev-TTcTl02R9Ts-unsplash.webp" alt="Connected Smart Living Room" loading="lazy">
+                    </div>
+                    <div class="img-card bottom-img">
+                        <img src="img/jakub-zerdzicki-3Ik3JMp7Woo-unsplash.webp" alt="Smart Ambient Lighting Lounge" loading="lazy">
+                    </div>
+                    <!-- Floating Badge -->
+                    <div class="rating-badge">
+                        <div class="avatar-group">
+                            <img src="images/team-1.webp" alt="Client">
+                            <img src="images/team-2.webp" alt="Client">
+                            <img src="images/team-3.webp" alt="Client">
+                            <div class="avatar-count">69+</div>
+                        </div>
+                        <div class="badge-text">Top Rated Smart Tech</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Content -->
+            <div class="luxury-content">
+                <span class="sub-title-orange">SMART HOME ECOSYSTEM</span>
+                <h2 class="main-heading-large">Intelligent Automation Systems Engineered For Modern Living.</h2>
+                <p class="luxury-desc">Elevate your home with precision-engineered automation. Seamlessly control
+                    ambient lighting, multi-room audio, adaptive climate, and next-generation AI security through
+                    intuitive voice commands, smart touch panels, and unified smartphone controls.</p>
+
+                <div class="features-grid-orange">
+                    <div class="feature-item">
+                        <div class="icon-box-orange"><i class="fas fa-lightbulb"></i></div>
+                        <div class="feature-text">
+                            <h4>Smart Lighting & Shading</h4>
+                            <p>Adaptive circadian lighting schedules, mood presets, and motorized smart shades.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-box-orange"><i class="fas fa-microphone-alt"></i></div>
+                        <div class="feature-text">
+                            <h4>Voice & App Control</h4>
+                            <p>Seamless integration with Apple HomeKit, Google Assistant, Alexa, and Matter.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-box-orange"><i class="fas fa-shield-alt"></i></div>
+                        <div class="feature-text">
+                            <h4>AI Security & Access</h4>
+                            <p>Biometric smart door locks, HD video doorbells, and 24/7 intelligent surveillance.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-box-orange"><i class="fas fa-leaf"></i></div>
+                        <div class="feature-text">
+                            <h4>Energy Optimization</h4>
+                            <p>Smart thermostats and real-time energy tracking to cut power costs by up to 30%.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-row-luxury">
+                    <a href="404.html" class="btn btn-orange">Explore Smart Systems</a>
+                    <div class="phone-cta">
+                        <div class="phone-icon-circle"><i class="fas fa-phone-alt"></i></div>
+                        <div class="phone-info">
+                            <span>Call Us Anytime</span>
+                            <strong>+00 123 456789</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Smart Systems (Dark Theme - Right to Left Auto-Animated) -->
+    <section class="section properties" id="properties">
+        <div class="watermark-listing">SYSTEMS</div>
+        <div class="container relative-container">
+            <!-- Header -->
+            <div class="properties-header-flex">
+                <div class="prop-header-text">
+                    <span class="sub-title-orange">✦ NEXT-GEN SMART TECH</span>
+                    <h2>Featured Smart Systems & Devices</h2>
+                    <p>Explore our cutting-edge smart home automation solutions, IoT ecosystems, AI security, and energy management devices.</p>
+                </div>
+                <a href="404.html" class="btn btn-primary">All Systems <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Right to Left Automatic Animated Container Slider -->
+        <div class="smart-tech-slider-wrapper">
+            <div class="smart-tech-marquee">
+                <div class="smart-tech-track">
+                    <!-- Card 1: Smart Biometric Access -->
+                    <div class="prop-card-dark smart-tech-card">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Smart Access</span>
+                            <span class="badge-id">SYS-101</span>
+                            <img src="img/sebastian-scholz-nuki-IJkSskfEqrM-unsplash.webp" alt="Smart Biometric Lock">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Next-Gen Smart Door & Biometrics</h3>
+                            <p class="prop-sub">Keyless entry with 3D fingerprint, auto-locking, encrypted access & guest e-keys.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$449</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i> 5.0
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-fingerprint"></i> Biometric 3D</span>
+                                <span><i class="fas fa-wifi"></i> Matter / WiFi</span>
+                                <span><i class="fas fa-shield-alt"></i> AES-256</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Adaptive Lighting -->
+                    <div class="prop-card-dark smart-tech-card">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Smart Lighting</span>
+                            <span class="badge-id">SYS-102</span>
+                            <img src="img/jakub-zerdzicki-023dpw6VCRU-unsplash.webp" alt="Adaptive Ambient Lighting">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Adaptive Ambient & Circadian Lighting</h3>
+                            <p class="prop-sub">16M colors with rhythm scheduling, automated motion sensing & scene presets.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$599</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.9
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-lightbulb"></i> 16M Colors</span>
+                                <span><i class="fas fa-project-diagram"></i> Zigbee 3.0</span>
+                                <span><i class="fas fa-magic"></i> Auto Scenes</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: AI Robotics Cleaning -->
+                    <div class="prop-card-dark smart-tech-card">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Home Robotics</span>
+                            <span class="badge-id">SYS-103</span>
+                            <img src="img/dreame-vacuum-cleaner-WgAmt-mJ9QA-unsplash.webp" alt="AI Vacuum Cleaner Hub">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Autonomous AI Cleaning & Vacuum Hub</h3>
+                            <p class="prop-sub">LiDAR 3D navigation, self-emptying base station, deep scrubbing & app mapping.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$799</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i> 5.0
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-robot"></i> LiDAR 3D</span>
+                                <span><i class="fas fa-sync-alt"></i> Auto-Empty</span>
+                                <span><i class="fas fa-mobile-alt"></i> App Control</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Voice & Audio Hub -->
+                    <div class="prop-card-dark smart-tech-card">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Voice & Audio</span>
+                            <span class="badge-id">SYS-104</span>
+                            <img src="img/jonas-leupe-dZmNJKFDuVI-unsplash.webp" alt="Voice Assistant Speaker Hub">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Central IoT Voice Assistant Hub</h3>
+                            <p class="prop-sub">High-fidelity smart speaker hub with AI voice recognition & multi-room audio sync.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$349</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.8
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-microphone"></i> AI Voice Hub</span>
+                                <span><i class="fas fa-music"></i> Hi-Fi Audio</span>
+                                <span><i class="fas fa-network-wired"></i> Mesh Bridge</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Smart Energy Station -->
+                    <div class="prop-card-dark smart-tech-card">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Energy & EV</span>
+                            <span class="badge-id">SYS-105</span>
+                            <img src="img/dcbel-4Mue3wkpoIw-unsplash.webp" alt="Smart Energy Station">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>EcoPower Smart Energy & EV Station</h3>
+                            <p class="prop-sub">Real-time solar grid sync, bidirectional EV fast charging & smart blackout backup.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$1,899</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i> 5.0
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-solar-panel"></i> Solar Sync</span>
+                                <span><i class="fas fa-charging-station"></i> EV Fast Charge</span>
+                                <span><i class="fas fa-leaf"></i> 35% Eco Save</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Multi-Zone Climate & Shading -->
+                    <div class="prop-card-dark smart-tech-card">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Smart Climate</span>
+                            <span class="badge-id">SYS-106</span>
+                            <img src="img/jakub-zerdzicki-73SrIBywpRw-unsplash.webp" alt="Smart Climate Control">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>AI Multi-Zone Climate & Shading</h3>
+                            <p class="prop-sub">Self-learning thermostat, synchronized motorized blinds & air quality management.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$899</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.9
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-temperature-low"></i> Multi-Zone</span>
+                                <span><i class="fas fa-wind"></i> Air Quality</span>
+                                <span><i class="fas fa-sliders-h"></i> Auto Blinds</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DUPLICATE SET OF 6 FOR SEAMLESS INFINITE RIGHT-TO-LEFT LOOP -->
+                    <!-- Card 1 Duplicate -->
+                    <div class="prop-card-dark smart-tech-card" aria-hidden="true">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Smart Access</span>
+                            <span class="badge-id">SYS-101</span>
+                            <img src="img/sebastian-scholz-nuki-IJkSskfEqrM-unsplash.webp" alt="Smart Biometric Lock">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Next-Gen Smart Door & Biometrics</h3>
+                            <p class="prop-sub">Keyless entry with 3D fingerprint, auto-locking, encrypted access & guest e-keys.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$449</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i> 5.0
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-fingerprint"></i> Biometric 3D</span>
+                                <span><i class="fas fa-wifi"></i> Matter / WiFi</span>
+                                <span><i class="fas fa-shield-alt"></i> AES-256</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 Duplicate -->
+                    <div class="prop-card-dark smart-tech-card" aria-hidden="true">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Smart Lighting</span>
+                            <span class="badge-id">SYS-102</span>
+                            <img src="img/jakub-zerdzicki-023dpw6VCRU-unsplash.webp" alt="Adaptive Ambient Lighting">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Adaptive Ambient & Circadian Lighting</h3>
+                            <p class="prop-sub">16M colors with rhythm scheduling, automated motion sensing & scene presets.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$599</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.9
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-lightbulb"></i> 16M Colors</span>
+                                <span><i class="fas fa-project-diagram"></i> Zigbee 3.0</span>
+                                <span><i class="fas fa-magic"></i> Auto Scenes</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 Duplicate -->
+                    <div class="prop-card-dark smart-tech-card" aria-hidden="true">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Home Robotics</span>
+                            <span class="badge-id">SYS-103</span>
+                            <img src="img/dreame-vacuum-cleaner-WgAmt-mJ9QA-unsplash.webp" alt="AI Vacuum Cleaner Hub">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Autonomous AI Cleaning & Vacuum Hub</h3>
+                            <p class="prop-sub">LiDAR 3D navigation, self-emptying base station, deep scrubbing & app mapping.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$799</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i> 5.0
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-robot"></i> LiDAR 3D</span>
+                                <span><i class="fas fa-sync-alt"></i> Auto-Empty</span>
+                                <span><i class="fas fa-mobile-alt"></i> App Control</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 Duplicate -->
+                    <div class="prop-card-dark smart-tech-card" aria-hidden="true">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Voice & Audio</span>
+                            <span class="badge-id">SYS-104</span>
+                            <img src="img/jonas-leupe-dZmNJKFDuVI-unsplash.webp" alt="Voice Assistant Speaker Hub">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>Central IoT Voice Assistant Hub</h3>
+                            <p class="prop-sub">High-fidelity smart speaker hub with AI voice recognition & multi-room audio sync.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$349</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.8
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-microphone"></i> AI Voice Hub</span>
+                                <span><i class="fas fa-music"></i> Hi-Fi Audio</span>
+                                <span><i class="fas fa-network-wired"></i> Mesh Bridge</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 Duplicate -->
+                    <div class="prop-card-dark smart-tech-card" aria-hidden="true">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Energy & EV</span>
+                            <span class="badge-id">SYS-105</span>
+                            <img src="img/dcbel-4Mue3wkpoIw-unsplash.webp" alt="Smart Energy Station">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>EcoPower Smart Energy & EV Station</h3>
+                            <p class="prop-sub">Real-time solar grid sync, bidirectional EV fast charging & smart blackout backup.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$1,899</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i> 5.0
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-solar-panel"></i> Solar Sync</span>
+                                <span><i class="fas fa-charging-station"></i> EV Fast Charge</span>
+                                <span><i class="fas fa-leaf"></i> 35% Eco Save</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 Duplicate -->
+                    <div class="prop-card-dark smart-tech-card" aria-hidden="true">
+                        <div class="prop-img-top">
+                            <span class="badge-type">Smart Climate</span>
+                            <span class="badge-id">SYS-106</span>
+                            <img src="img/jakub-zerdzicki-73SrIBywpRw-unsplash.webp" alt="Smart Climate Control">
+                        </div>
+                        <div class="prop-content-dark">
+                            <h3>AI Multi-Zone Climate & Shading</h3>
+                            <p class="prop-sub">Self-learning thermostat, synchronized motorized blinds & air quality management.</p>
+                            <div class="prop-price-row">
+                                <span class="price">$899</span>
+                                <div class="rating active">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.9
+                                </div>
+                            </div>
+                            <div class="prop-specs-row">
+                                <span><i class="fas fa-temperature-low"></i> Multi-Zone</span>
+                                <span><i class="fas fa-wind"></i> Air Quality</span>
+                                <span><i class="fas fa-sliders-h"></i> Auto Blinds</span>
+                            </div>
+                            <div class="prop-footer-row">
+                                <div class="author-circle">ST</div>
+                                <a href="404.html" class="btn-details-link">Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Family Testimonial Section -->
+    <section class="family-testimonial">
+        <div class="container family-container">
+            <!-- Left Content -->
+            <div class="family-content">
+                <div class="quote-icon-large">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="family-quote">"Upgrading our home with Stackly Smart Automation has been transformative. Managing our lighting, security, and climate from one simple app or voice command has simplified our daily routine and significantly lowered our electricity bills!"</p>
+                <div class="client-name">James Carter, <span class="client-role">Smart Homeowner</span></div>
+
+                <!-- Stats Grid -->
+                <div class="family-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">15<sup class="plus">+</sup></div>
+                        <div class="stat-desc">Years of Innovation</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-num">99%</div>
+                        <div class="stat-desc">System Reliability</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-num">80K</div>
+                        <div class="stat-desc">Connected Devices</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Image -->
+            <div class="family-image">
+                <img src="images/pic6.webp" alt="Happy Family">
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="split-section">
+        <div class="image-col" style="background-image: url('img/moritz-kindler-PBtfsP3eEZ4-unsplash.webp');"></div>
+
+        <div class="content-col">
+            <div class="sub-heading">+ WHY CHOOSE US</div>
+            <h2 class="main-heading">Intelligent Smart Home Automation Built For Seamless Living</h2>
+            <p class="description">
+                "We engineer cutting-edge IoT ecosystems that harmonize lighting, climate, security, and smart media into a single effortless living experience."
+            </p>
+
+            <ul class="feature-list">
+                <li>
+                    <span class="check-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                    </span>
+                    <strong>Unified Ecosystem Control:</strong> Manage all connected lights, switches, audio zones, and smart appliances from one app or voice command.
+                </li>
+                <li>
+                    <span class="check-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                    </span>
+                    <strong>AI-Driven Adaptive Intelligence:</strong> Automated routines learn your family schedule to optimize ambient lighting, temperature, and shades.
+                </li>
+                <li>
+                    <span class="check-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                    </span>
+                    <strong>Proactive Smart Security & Alerts:</strong> 24/7 biometric access, smart intruder sensing, instant leak alerts, and encrypted cloud monitoring.
+                </li>
+            </ul>
+
+            <a href="404.html" class="read-more-btn">
+                <span class="btn-icon-circle">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" />
+                    </svg>
+                </span>
+                Explore Solutions
+            </a>
+        </div>
+    </section>
+
+    <!-- Smart Home Spotlight Section -->
+    <section class="section spotlight">
+        <div class="container spotlight-content">
+            <div class="spotlight-img">
+                <img src="img/jakub-zerdzicki-We56jns_zLE-unsplash.webp" alt="Connected Smart Home Experience" loading="lazy">
+            </div>
+            <div class="spotlight-text">
+                <span class="sub-title-orange" style="display: inline-block; margin-bottom: 12px; font-weight: 700; letter-spacing: 2px;">✦ INTERACTIVE SMART EXPERIENCE</span>
+                <h2>Step Into The Future Of Intelligent Connected Living</h2>
+                <p>Experience seamless smart living where lighting, multi-room audio, climate, and biometric security adjust automatically to your daily rhythm. Step into an intuitive environment tailored to your lifestyle.</p>
+
+                <div class="team-row">
+                    <div class="team-member" title="IoT Solutions Specialist">
+                        <img src="images/team-1.webp" alt="IoT Specialist">
+                    </div>
+                    <div class="team-member" title="Smart Home Architect">
+                        <img src="images/team-2.webp" alt="Smart Home Architect">
+                    </div>
+                    <div class="team-member" title="Automation Engineer">
+                        <img src="images/team-3.webp" alt="Automation Engineer">
+                    </div>
+                </div>
+
+                <a href="404.html" class="btn btn-primary">Book A Live Demo <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Slider Section -->
+    <section class="section testimonials-slider" id="testimonials">
+        <div class="container">
+            <!-- Header -->
+            <div class="testi-header">
+                <h4 class="testi-sub"><span class="decorative-plus">+</span> Verified Customer Reviews</h4>
+                <h2 class="testi-main">Hear What Homeowners Say About Our Smart Systems</h2>
+            </div>
+
+            <!-- Swiper Slider -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="client-info-left">
+                                <img src="images/team-1.webp" alt="Joan Cooper" class="client-img">
+                                <div class="star-rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="client-content-right">
+                                <p class="client-quote">"Stackly converted our home into a seamless, voice-activated smart sanctuary. The automated routines and ambient lighting scenes work effortlessly every day."</p>
+                                <div class="client-details">
+                                    <h4>Joan Cooper</h4>
+                                    <p>Smart Home Client</p>
+                                </div>
+                            </div>
+                            <!-- Signature Accent -->
+                            <div class="signature-accent">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="client-info-left">
+                                <img src="images/testimonial-2.webp" alt="David Smith" class="client-img">
+                                <div class="star-rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="client-content-right">
+                                <p class="client-quote">"The security system and automated locks give our family total peace of mind. Managing cameras and access remotely from our smartphones is fast and reliable."</p>
+                                <div class="client-details">
+                                    <h4>David Smith</h4>
+                                    <p>Architect & Tech Enthusiast</p>
+                                </div>
+                            </div>
+                            <!-- Signature Accent -->
+                            <div class="signature-accent">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="client-info-left">
+                                <img src="images/team-2.webp" alt="Tina Brown" class="client-img">
+                                <div class="star-rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="client-content-right">
+                                <p class="client-quote">"Our power bills dropped by 25% within two months of installing the EcoSmart climate and motorized shade system. The setup team was world-class!"</p>
+                                <div class="client-details">
+                                    <h4>Tina Brown</h4>
+                                    <p>Residential Client</p>
+                                </div>
+                            </div>
+                            <!-- Signature Accent -->
+                            <div class="signature-accent">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="section why-choose-us" id="why-choose-us">
+        <div class="container">
+            <div class="section-header center">
+                <h2 style="color: var(--white); margin-bottom: 50px;">Why Choose Stackly Smart Home</h2>
+            </div>
+            <div class="why-choose-grid">
+                <!-- Item 1 -->
+                <div class="choose-item">
+                    <div class="choose-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="choose-content">
+                        <h3>COMPREHENSIVE IOT ECOSYSTEM</h3>
+                        <p>Seamless compatibility with Apple HomeKit, Google Home, Amazon Alexa, Zigbee, and Matter protocols.</p>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="choose-item">
+                    <div class="choose-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <div class="choose-content">
+                        <h3>CUSTOM AUTOMATION SCENES</h3>
+                        <p>Tailored morning, away, movie, and goodnight routines configured specifically for your household lifestyle.</p>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="choose-item">
+                    <div class="choose-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="choose-content">
+                        <h3>ENTERPRISE-GRADE SECURITY</h3>
+                        <p>End-to-end encrypted hardware safeguarding your private smart home network and family data 24/7.</p>
+                    </div>
+                </div>
+                <!-- Item 4 -->
+                <div class="choose-item">
+                    <div class="choose-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="choose-content">
+                        <h3>INSTANT SMART ALERTS</h3>
+                        <p>Instant mobile notifications for motion detection, water leakage, smoke alarms, and door activity.</p>
+                    </div>
+                </div>
+                <!-- Item 5 -->
+                <div class="choose-item">
+                    <div class="choose-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="choose-content">
+                        <h3>SMART ENERGY SAVINGS</h3>
+                        <p>AI-driven power optimization and adaptive heating/cooling that noticeably reduce monthly utility costs.</p>
+                    </div>
+                </div>
+                <!-- Item 6 -->
+                <div class="choose-item">
+                    <div class="choose-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="choose-content">
+                        <h3>24/7 EXPERT TECH SUPPORT</h3>
+                        <p>Dedicated installation engineers, continuous over-the-air firmware updates, and rapid on-site assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <a href="index.html">
+                            <img src="images/logo.webp" alt="Stackly Logo" class="logo-img">
+                        </a>
+                    </div>
+                    <div class="social-icons">
+                        <a href="404.html?from=index.html&section=footer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="404.html?from=index.html&section=footer"><i class="fab fa-twitter"></i></a>
+                        <a href="404.html?from=index.html&section=footer"><i class="fab fa-instagram"></i></a>
+                        <a href="404.html?from=index.html&section=footer"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Get In Touch</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> MMR Complex, China Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+                    <p><i class="fas fa-envelope"></i> support@stacklysmart.com</p>
+                    <p><i class="fas fa-phone"></i> +1 386-688-3295</p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Smart Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="404.html?from=index.html&section=footer">Smart Lighting</a></li>
+                        <li><a href="404.html?from=index.html&section=footer">Home Security</a></li>
+                        <li><a href="404.html?from=index.html&section=footer">Climate Automation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Service</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Subscribe to Smart Home Insights</h3>
+                    <form class="newsletter-form" action="404.html?from=index.html&section=footer">
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright &copy; 2024 Stackly Smart Home Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/gsap-animations.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
+
+
+

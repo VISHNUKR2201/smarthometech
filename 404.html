@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Stackly Smart Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: var(--section-dark-bg);
+            color: var(--white);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: var(--font-poppins);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 9rem;
+            color: var(--secondary-lime);
+            margin-bottom: 0;
+            line-height: 0.85;
+            font-weight: 800;
+            text-shadow: 0 0 35px rgba(212, 230, 104, 0.25);
+        }
+
+        h2 {
+            font-size: 2.3rem;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        p {
+            color: var(--text-grey);
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-goback {
+            background-color: var(--secondary-lime);
+            color: #12181C;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid var(--secondary-lime);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-goback:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 230, 104, 0.35);
+            background-color: #e0f278;
+            border-color: #e0f278;
+        }
+
+        .btn-home {
+            background-color: transparent;
+            color: var(--white);
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--white);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 6rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn-goback, .btn-home {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>404</h1>
+    <h2>System Node Not Found</h2>
+    <p>The requested smart home destination appears to be disconnected or temporarily unavailable. Click below to return to your previous section.</p>
+    
+    <div class="button-group">
+        <button type="button" onclick="goBack()" class="btn-goback" id="goBackBtn">
+            <i class="fas fa-arrow-left"></i> Go Back
+        </button>
+        <a href="index.html" class="btn-home">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+    </div>
+
+    <script>
+        function goBack() {
+            // Priority 1: Use browser history back for instant, direct return to the exact position without reloading
+            if (window.history.length > 1) {
+                window.history.back();
+                return;
+            }
+
+            // Priority 2: Fallback if directly opened or history is unavailable
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromPage = urlParams.get('from') || urlParams.get('page') || sessionStorage.getItem('404_return_page') || 'index.html';
+            const targetSection = urlParams.get('section') || urlParams.get('to') || sessionStorage.getItem('404_return_section');
+
+            if (fromPage && targetSection) {
+                window.location.href = fromPage + '#' + targetSection;
+            } else if (fromPage) {
+                window.location.href = fromPage;
+            } else if (document.referrer) {
+                window.location.href = document.referrer;
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

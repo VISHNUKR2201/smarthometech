@@ -135,13 +135,14 @@
         <button type="button" onclick="goBack()" class="btn-goback" id="goBackBtn">
             <i class="fas fa-arrow-left"></i> Go Back
         </button>
-        <a href="index.html" class="btn-home">
+        <a href="index.html" class="btn-home" onclick="sessionStorage.removeItem('404_return_scroll_y'); sessionStorage.removeItem('404_return_section'); sessionStorage.removeItem('404_is_returning');">
             <i class="fas fa-home"></i> Back to Home
         </a>
     </div>
 
     <script>
         function goBack() {
+            sessionStorage.setItem('404_is_returning', 'true');
             // Priority 1: Use browser history back for instant, direct return to the exact position without reloading
             if (window.history.length > 1) {
                 window.history.back();

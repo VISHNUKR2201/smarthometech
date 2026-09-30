@@ -113,9 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Instant Direct Jump for Hash Targets or Exact Stored Position (e.g. returning from 404)
+    // Instant Direct Jump only when returning via 404 Go Back button
+    const is404Returning = sessionStorage.getItem('404_is_returning') === 'true';
     const returnScrollY = sessionStorage.getItem('404_return_scroll_y');
-    if (returnScrollY !== null) {
+    if (is404Returning && returnScrollY !== null) {
         const targetY = parseInt(returnScrollY, 10);
         if (!isNaN(targetY)) {
             if ('scrollRestoration' in history) {
@@ -130,9 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
             doScroll();
             requestAnimationFrame(doScroll);
             setTimeout(doScroll, 50);
-            sessionStorage.removeItem('404_return_scroll_y');
         }
-    } else if (window.location.hash) {
+    }
+    // Always clear 404 return flags so subsequent navigations land cleanly at the top
+    sessionStorage.removeItem('404_return_scroll_y');
+    sessionStorage.removeItem('404_return_section');
+    sessionStorage.removeItem('404_is_returning');
+
+    if (window.location.hash) {
         const hashTarget = document.querySelector(window.location.hash);
         if (hashTarget) {
             if ('scrollRestoration' in history) {
@@ -150,6 +156,20 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(jumpInstant, 50);
         }
     }
+
+    // Universal Logo & Home Redirection Handler (Footer, Navbar, Header across all pages)
+    document.addEventListener('click', (e) => {
+        const logoOrHomeLink = e.target.closest('.logo a, .footer-col .logo a, .navbar .logo a, a.logo, a[href="index.html"], a[href="./index.html"]');
+        if (logoOrHomeLink) {
+            e.preventDefault();
+            sessionStorage.removeItem('404_return_scroll_y');
+            sessionStorage.removeItem('404_return_section');
+            sessionStorage.removeItem('404_is_returning');
+
+            // Cleanly reload and redirect directly to index.html
+            window.location.href = 'index.html';
+        }
+    });
 
     // Smooth Scroll for in-page anchor clicks
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

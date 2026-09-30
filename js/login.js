@@ -4,7 +4,26 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initial setup if needed
+    // Real-time password matching listener
+    const passInput = document.getElementById('signupPassword');
+    const confirmInput = document.getElementById('signupConfirmPassword');
+    const errElem = document.getElementById('signupPasswordError');
+
+    const validatePasswords = () => {
+        if (!passInput || !confirmInput) return;
+        if (confirmInput.value.length > 0 && passInput.value !== confirmInput.value) {
+            if (errElem) errElem.style.display = 'block';
+            confirmInput.style.borderColor = '#FF5C5C';
+            confirmInput.setCustomValidity('Passwords do not match');
+        } else {
+            if (errElem) errElem.style.display = 'none';
+            confirmInput.style.borderColor = '';
+            confirmInput.setCustomValidity('');
+        }
+    };
+
+    if (passInput) passInput.addEventListener('input', validatePasswords);
+    if (confirmInput) confirmInput.addEventListener('input', validatePasswords);
 });
 
 // Switch between Login and Signup tabs
@@ -86,11 +105,29 @@ function handleSignupSubmit(e) {
     e.preventDefault();
     const nameInput = document.getElementById('signupName');
     const emailInput = document.getElementById('signupEmail');
+    const passwordInput = document.getElementById('signupPassword');
+    const confirmPasswordInput = document.getElementById('signupConfirmPassword');
+    const errElem = document.getElementById('signupPasswordError');
     const roleRadio = document.querySelector('input[name="signupRole"]:checked');
     const selectedRole = roleRadio ? roleRadio.value : 'User';
 
     const userName = nameInput.value.trim();
     const userEmail = emailInput.value.trim();
+    const password = passwordInput ? passwordInput.value : '';
+    const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
+
+    // Validate Password Matching
+    if (password !== confirmPassword) {
+        if (errElem) errElem.style.display = 'block';
+        if (confirmPasswordInput) {
+            confirmPasswordInput.style.borderColor = '#FF5C5C';
+            confirmPasswordInput.focus();
+        }
+        return;
+    } else {
+        if (errElem) errElem.style.display = 'none';
+        if (confirmPasswordInput) confirmPasswordInput.style.borderColor = '';
+    }
 
     // Store user info map
     try {
@@ -112,6 +149,7 @@ function handleSignupSubmit(e) {
     switchAuthTab('login');
     const loginPasswordInput = document.getElementById('loginPassword');
     if (loginPasswordInput) {
+        loginPasswordInput.value = password;
         loginPasswordInput.focus();
     }
 }
